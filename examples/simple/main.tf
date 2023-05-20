@@ -1,5 +1,5 @@
 module "migrate" {
-  source = "../../"
+  source = "github.com/djangoheads/terraform-kubernetes-django"
   
   role = "command"
   namespace = var.namespace
@@ -12,12 +12,12 @@ module "migrate" {
 }
 
 
-module "worker" {
-  source = "../../"
+module "server" {
+  source = "github.com/djangoheads/terraform-kubernetes-django"
 
   role = "server"
   namespace = var.namespace
-  name = "${var.name}-worker"
+  name = "${var.name}-app"
   image = var.image
   config = local.config
   secrets = local.secrets
@@ -27,22 +27,26 @@ module "worker" {
   ]
 }
 
-module "beat" {
-  source = "../../"
 
-  role = "server"
-  namespace = var.namespace
-  name = "${var.name}-beat"
-  image = var.image
-  config = local.config
-  secrets = local.secrets
-  replicas = {
-    max = 1
-    min = 1
+resource "kubernetes_ingress" "main" {
+  metadata {
+    name = var.name
+    namespace = var.namespace
   }
-  
-  depends_on = [ 
-    module.worker,
-    module.migrate
-  ]
+
+  spec {
+    rule {
+      host = "*"
+      http {
+        path {
+          path = "/"
+          backend {
+            service_name = module.server.service_name
+            service_port = 80
+          }
+        }
+      }
+    }
+  }
+  wait_for_load_balancer = true
 }
