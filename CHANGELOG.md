@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.1.1](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.1.0...v1.1.1) (2023-05-20)
+
+
+### Bug Fixes
+
+* changelog.md ([b3ead05](https://github.com/djangoheads/terraform-kubernetes-django/commit/b3ead05794840d957464cfcbbdcbd79619d6ebea))
+* Cleanup from Replit ([052e7b0](https://github.com/djangoheads/terraform-kubernetes-django/commit/052e7b09cc7343519ebd33853cacdc24aa3442bb))
+* examples ([eb774d1](https://github.com/djangoheads/terraform-kubernetes-django/commit/eb774d1609995deb4b8561c2108aa1146b6442de))
+
 ## [1.1.0](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.0.0...v1.1.0) (2023-05-20)
 
 
