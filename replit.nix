@@ -1,8 +1,6 @@
 { pkgs }: {
     deps = [
-        pkgs.gnupg
-        pkgs.wget
-        pkgs.sudo
+        pkgs.openssh_with_kerberos
         pkgs.cowsay
     ];
 }
