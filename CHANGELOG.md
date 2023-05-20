@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.0.0...v1.1.0) (2023-05-20)
+
+
+### Features
+
+* Add worker and celery Example ([93f94d2](https://github.com/djangoheads/terraform-kubernetes-django/commit/93f94d22ff82bc55c67d5d62bd6177855d677708))
+* Reorg resource naming ([b2e654f](https://github.com/djangoheads/terraform-kubernetes-django/commit/b2e654f59999a5ea6ecca2af8b18f8821d2bdf35))
+
 ## 1.0.0 (2023-05-20)
 
 
