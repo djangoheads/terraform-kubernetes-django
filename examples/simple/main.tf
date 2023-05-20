@@ -12,12 +12,12 @@ module "migrate" {
 }
 
 
-module "server" {
+module "worker" {
   source = "../../"
 
   role = "server"
   namespace = var.namespace
-  name = "${var.name}-app"
+  name = "${var.name}-worker"
   image = var.image
   config = local.config
   secrets = local.secrets
@@ -27,29 +27,22 @@ module "server" {
   ]
 }
 
+module "beat" {
+  source = "../../"
 
-resource "kubernetes_ingress" "example" {
-  metadata {
-    name = var.name
-    namespace = var.namespace
-    # annotations = {
-    #   "ingress.kubernetes.io/rewrite-target" = "/"
-    # }
+  role = "server"
+  namespace = var.namespace
+  name = "${var.name}-beat"
+  image = var.image
+  config = local.config
+  secrets = local.secrets
+  replicas = {
+    max = 1
+    min = 1
   }
-
-  spec {
-    rule {
-      host = "*"
-      http {
-        path {
-          path = "/"
-          backend {
-            service_name = module.server.service_name
-            service_port = 80
-          }
-        }
-      }
-    }
-  }
-  wait_for_load_balancer = true
+  
+  depends_on = [ 
+    module.worker,
+    module.migrate
+  ]
 }
