@@ -1,4 +1,4 @@
-resource "kubernetes_deployment" "main" {
+resource "kubernetes_deployment" "worker" {
   count = var.role == "worker" ? 1 : 0
   metadata {
     name = var.name

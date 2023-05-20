@@ -1,4 +1,4 @@
-resource "kubernetes_job" "main" {
+resource "kubernetes_job" "command" {
   count = var.role == "command" ? 1 : 0
   metadata {
     namespace = var.namespace

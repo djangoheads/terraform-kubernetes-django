@@ -1,4 +1,4 @@
-resource "kubernetes_deployment" "main" {
+resource "kubernetes_deployment" "server" {
   count = var.role == "server" ? 1 : 0
   metadata {
     name = var.name
@@ -33,7 +33,7 @@ resource "kubernetes_deployment" "main" {
 }
 
 
-resource "kubernetes_service" "main" {
+resource "kubernetes_service" "server" {
   count = var.role == "server" ? 1 : 0
   metadata {
     name = var.name
