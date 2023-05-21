@@ -1,52 +1,69 @@
 module "migrate" {
-  source = "github.com/djangoheads/terraform-kubernetes-django"
-  
+  # Main options 
+  # source = "github.com/djangoheads/terraform-kubernetes-django"
+  source = "../../"
   role = "command"
+  
+  # Common options
   namespace = var.namespace
-  name = "${var.name}-migrate"
   image = var.image
-  config = local.config
+  config = yamlencode(merge(yamldecode(local.config), {"ANOTHER": "VALUE"}))
   secrets = local.secrets
-
+  
+  # Specific options
+  name = "${var.name}-migrate"
   command = ["migrate"]
 }
 
-
 module "server" {
-  source = "github.com/djangoheads/terraform-kubernetes-django"
-
+  # Main options 
+  # source = "github.com/djangoheads/terraform-kubernetes-django"
+  source = "../../"
   role = "server"
+
+  # Common options
   namespace = var.namespace
-  name = "${var.name}-app"
   image = var.image
   config = local.config
   secrets = local.secrets
+
+  # Specific options
+  name = "${var.name}-server"
   
   depends_on = [ 
     module.migrate
   ]
 }
 
+module "ingress" {
+  # Main options 
+  # source = "github.com/djangoheads/terraform-kubernetes-django"
+  source = "../../"
+  role = "ingress"
 
-resource "kubernetes_ingress" "main" {
-  metadata {
-    name = var.name
-    namespace = var.namespace
-  }
+  # Common options
+  namespace = var.namespace
 
-  spec {
-    rule {
-      host = "*"
-      http {
-        path {
-          path = "/"
-          backend {
-            service_name = module.server.service_name
-            service_port = 80
-          }
-        }
+  # NOTE: NOT USED, TODO: REFACTOR, BUT REQUIRED TO PUT HERE
+  image = var.image
+  config = local.config
+  secrets = local.secrets
+
+  # Specific options
+  name = "${var.name}-ingress"
+
+  ingress = [{
+    host = "admin.somedomain.com"
+    paths = [{
+      path = "/admin/"
+      backend = {
+        service = module.server.service_name
+        port = 80
       }
-    }
-  }
-  wait_for_load_balancer = true
+    }]
+  }]
+  
+  depends_on = [ 
+    module.migrate
+  ]
 }

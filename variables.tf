@@ -1,7 +1,7 @@
 variable "role" {
   type = string 
   validation {
-    condition = contains(["server", "command", "worker", "cron"], var.role)
+    condition = contains(["ingress", "server", "command", "worker", "cron"], var.role)
     error_message = "${var.role} must be one of: server, command, worker, cron"
   }
 }
@@ -19,6 +19,10 @@ variable "image" {
     name = string
     tag = string
   })
+  default = {
+    name = null
+    tag = "latest"
+  }
 }
 
 variable "command" {
@@ -28,6 +32,7 @@ variable "command" {
 
 variable "config" {
   type = string
+  default = ""
   validation {
     condition = length(yamldecode(var.config)) >= 1
     error_message = "Check config file ${var.config}, it's invalid or empty"
@@ -36,6 +41,7 @@ variable "config" {
 
 variable "secrets" {
   type = string
+  default = ""
   sensitive = true
   validation {
     condition = length(yamldecode(var.secrets)) >= 1
@@ -85,4 +91,44 @@ variable "readiness" {
     port = 8000
     path = "/health-check"
   }
+}
+
+variable "liveness" {
+  type = object({
+    delay = number
+    port = number
+    path = string
+  })
+  default = {
+    delay = 60
+    port = 8000
+    path = "/health-check"
+  }
+}
+
+###########
+# INGRESS #
+###########
+
+variable "ingress" {
+  type = list(object({
+    host = string
+    paths = list(object({
+      path = string
+      backend = object({
+        service = string
+        port = number
+      })
+    }))
+  }))
+  default = [{
+    host = "*"
+    paths = [{
+      path = "/"
+      backend = {
+        service = null
+        port = 80
+      }
+    }]
+  }]
 }

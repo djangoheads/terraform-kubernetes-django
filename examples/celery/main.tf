@@ -1,5 +1,6 @@
 module "migrate" {
-  source = "github.com/djangoheads/terraform-kubernetes-django"
+  # source = "github.com/djangoheads/terraform-kubernetes-django"
+  source = "../../"
   
   role = "command"
   namespace = var.namespace
@@ -13,7 +14,8 @@ module "migrate" {
 
 
 module "worker" {
-  source = "github.com/djangoheads/terraform-kubernetes-django"
+  # source = "github.com/djangoheads/terraform-kubernetes-django"
+  source = "../../"
 
   role = "server"
   namespace = var.namespace
@@ -28,7 +30,8 @@ module "worker" {
 }
 
 module "beat" {
-  source = "github.com/djangoheads/terraform-kubernetes-django"
+  # source = "github.com/djangoheads/terraform-kubernetes-django"
+  source = "../../"
 
   role = "server"
   namespace = var.namespace
