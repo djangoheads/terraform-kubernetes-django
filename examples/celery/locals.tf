@@ -1,4 +1,10 @@
 locals {
-  config = file("${path.module}/${var.config}")
-  secrets = file("${path.module}/${var.secrets}")
+  namespace = "celery-namespace"
+  name      = "celery-service"
+  image = {
+    name = "celery/image"
+    tag  = "version"
+  }
+  config  = file("${path.module}/data/config.yaml")
+  secrets = file("${path.module}/data/secrets.encrypted.yaml")
 }

@@ -1,57 +1,65 @@
 variable "role" {
-  type = string 
+  type        = string
+  description = "The main role of component, can be ingress, server, command, worker, cron"
   validation {
-    condition = contains(["ingress", "server", "command", "worker", "cron"], var.role)
+    condition     = contains(["ingress", "server", "command", "worker", "cron"], var.role)
     error_message = "${var.role} must be one of: server, command, worker, cron"
   }
 }
 
 variable "namespace" {
-  type = string
-} 
+  type        = string
+  description = "Kubernetes namespace"
+}
 
 variable "name" {
-  type = string
-} 
+  type        = string
+  description = "Main name in K8S resources"
+}
 
 variable "image" {
   type = object({
     name = string
-    tag = string
+    tag  = string
   })
   default = {
     name = null
-    tag = "latest"
+    tag  = "latest"
   }
+  description = "Docker image"
 }
 
 variable "command" {
-  type = list(string)
-  default = []
+  type        = list(string)
+  default     = []
+  description = "Override command"
 }
 
 variable "config" {
-  type = string
+  type    = string
   default = ""
   validation {
-    condition = length(yamldecode(var.config)) >= 1
+    condition     = length(yamldecode(var.config)) >= 1
     error_message = "Check config file ${var.config}, it's invalid or empty"
   }
+  description = "Django Configuration"
 }
 
 variable "secrets" {
-  type = string
-  default = ""
+  type      = string
+  default   = ""
   sensitive = true
   validation {
-    condition = length(yamldecode(var.secrets)) >= 1
+    condition     = length(yamldecode(var.secrets)) >= 1
     error_message = "Check config file ${var.secrets}, it's invalid or empty"
   }
+  description = "Django Secret Configuration"
 }
 
 variable "wait" {
-  type = bool
-  default = true
+  type        = bool
+  default     = true
+  description = "Perform waiting resource to be available and run"
 }
 
 ###########
@@ -73,37 +81,41 @@ variable "replicas" {
     min = 3
     max = -1
   }
+  description = "Define scalability options"
 }
 
 variable "port" {
-  type = number
-  default = 8000
+  type        = number
+  default     = 8000
+  description = "Port to expose"
 }
 
 variable "readiness" {
   type = object({
     delay = number
-    port = number
-    path = string
+    port  = number
+    path  = string
   })
   default = {
     delay = 10
-    port = 8000
-    path = "/health-check"
+    port  = 8000
+    path  = "/health-check"
   }
+  description = "Readiness rules for Server"
 }
 
 variable "liveness" {
   type = object({
     delay = number
-    port = number
-    path = string
+    port  = number
+    path  = string
   })
   default = {
     delay = 60
-    port = 8000
-    path = "/health-check"
+    port  = 8000
+    path  = "/health-check"
   }
+  description = "Liveness rules for Server"
 }
 
 ###########
@@ -117,7 +129,7 @@ variable "ingress" {
       path = string
       backend = object({
         service = string
-        port = number
+        port    = number
       })
     }))
   }))
@@ -127,8 +139,9 @@ variable "ingress" {
       path = "/"
       backend = {
         service = null
-        port = 80
+        port    = 80
       }
     }]
   }]
+  description = "Ingress configuration"
 }

@@ -1,7 +1,7 @@
 resource "kubernetes_deployment" "server" {
   count = contains(["server", "worker"], var.role) ? 1 : 0
   metadata {
-    name = var.name
+    name      = var.name
     namespace = var.namespace
     labels = {
       "app.kubernetes.io/name" = "${var.namespace}-${var.name}-main"
@@ -33,7 +33,7 @@ resource "kubernetes_deployment" "server" {
           dynamic "port" {
             for_each = var.role == "server" ? [1] : []
             content {
-              container_port = var.port  
+              container_port = var.port
             }
           }
           dynamic "readiness_probe" {
@@ -43,7 +43,7 @@ resource "kubernetes_deployment" "server" {
               http_get {
                 port = var.readiness.port
                 path = var.readiness.path
-              }  
+              }
             }
           }
           dynamic "liveness_probe" {
@@ -53,7 +53,7 @@ resource "kubernetes_deployment" "server" {
               http_get {
                 port = var.liveness.port
                 path = var.liveness.path
-              }  
+              }
             }
           }
         }
@@ -75,11 +75,28 @@ resource "kubernetes_deployment" "server" {
       }
     }
   }
-  
+
   wait_for_rollout = var.wait
 
-  depends_on = [ 
+  depends_on = [
     kubernetes_config_map.main,
     kubernetes_secret.main
   ]
+}
+
+resource "kubernetes_horizontal_pod_autoscaler" "autoscaler" {
+  count = contains(["server", "worker"], var.role) && var.replicas.max > var.replicas.min ? 1 : 0
+  metadata {
+    name = var.name
+  }
+
+  spec {
+    min_replicas = var.replicas.min
+    max_replicas = var.replicas.max
+
+    scale_target_ref {
+      kind = "Deployment"
+      name = var.name
+    }
+  }
 }

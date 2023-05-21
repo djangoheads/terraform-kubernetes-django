@@ -1,7 +1,7 @@
 resource "kubernetes_ingress" "main" {
   count = var.role == "ingress" ? 1 : 0
   metadata {
-    name = var.name
+    name      = var.name
     namespace = var.namespace
   }
 
