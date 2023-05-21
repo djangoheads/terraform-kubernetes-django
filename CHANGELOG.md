@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.1.1...v1.2.0) (2023-05-21)
+
+
+### Features
+
+* Add ingress as a separate role for the model ([050632f](https://github.com/djangoheads/terraform-kubernetes-django/commit/050632f929c991c101615b3a915b9783742980a7))
+
 ### [1.1.1](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.1.0...v1.1.1) (2023-05-20)
 
 
