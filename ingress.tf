@@ -6,22 +6,6 @@ resource "kubernetes_ingress" "main" {
   }
 
   spec {
-    # dynamic "rule" {
-    #   for_each = [1]
-    #   content {
-    #     host = "*"
-    #     http {
-    #       path {
-    #         path = "/"
-    #         backend {
-    #           service_name = "test"
-    #           service_port = 80
-    #         }
-    #       }
-    #     }
-    #   }
-    # }
-
     dynamic "rule" {
       for_each = var.ingress
       content {
