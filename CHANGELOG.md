@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.2.1](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.2.0...v1.2.1) (2023-05-21)
+
+
+### Bug Fixes
+
+* Terraform formating, added initial autoscaler ([3fc5baf](https://github.com/djangoheads/terraform-kubernetes-django/commit/3fc5bafafb2315d2ee6629ba16383fb32eaca16c))
+
 ## [1.2.0](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.1.1...v1.2.0) (2023-05-21)
 
 
