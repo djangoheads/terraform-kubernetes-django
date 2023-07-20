@@ -1,0 +1,5 @@
+
+
+variable "conf" {
+  type = any
+}
