@@ -18,18 +18,17 @@ variable "name" {
 }
 
 variable "image" {
-  type = object({
-    name = string
-    tag  = string
-  })
-  default = {
-    name = null
-    tag  = "latest"
-  }
-  description = "Docker image"
+  type        = string
+  description = "image"
 }
 
 variable "command" {
+  type        = list(string)
+  default     = []
+  description = "Override command"
+}
+
+variable "args" {
   type        = list(string)
   default     = []
   description = "Override command"
@@ -78,8 +77,8 @@ variable "replicas" {
     max = number
   })
   default = {
-    min = 3
-    max = -1
+    min = 1
+    max = 1
   }
   description = "Define scalability options"
 }
@@ -144,4 +143,9 @@ variable "ingress" {
     }]
   }]
   description = "Ingress configuration"
+}
+variable "env_vars" {
+  description = "Environment variables for the storage module"
+  type        = map(string)
+  default     = {}
 }
