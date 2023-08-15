@@ -22,7 +22,6 @@ services:
     depends_on:
       storage:
         condition: service_healthy
-    x-depends: storage
     x-type: job
     env_file:
       - .env
@@ -37,7 +36,6 @@ services:
     depends_on:
       migration:
         condition: service_completed_successfully
-    x-depends: migration
     x-type: job
     env_file:
       - .env
@@ -52,7 +50,6 @@ services:
     depends_on:
       migration:
         condition: service_completed_successfully
-    x-depends: migration-user
     x-type: service
     ports:
       - 8000:8000

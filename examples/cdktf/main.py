@@ -36,8 +36,8 @@ class MyStack(TerraformStack):
             service_res = resources[name]
             depends_on = []
 
-            if service_res.get('x-depends'):
-                depends_on.append(init_status_service_map[service_res.get('x-depends')])
+            if depends:=service_res.get('depends_on'):
+                depends_on.append(init_status_service_map[next(iter(depends.keys()))])
 
             if service_res.get('x-type') == 'job':
                 job_inst = job.Job(self, f"job-{name}",
