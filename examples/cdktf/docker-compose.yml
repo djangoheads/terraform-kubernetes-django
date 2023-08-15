@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  # 2. Database
+  storage:
+    image: postgres:14
+    env_file:
+      - docker-compose.env
+    x-type: service
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U service" ]
+      interval: 1s
+      timeout: 1s
+      retries: 5
+    x-port: 5432
+
+  # 3. Migration
+  migration:
+    image: artemiit/docker-to-k8s:001
+    depends_on:
+      storage:
+        condition: service_healthy
+    x-depends: storage
+    x-type: job
+    env_file:
+      - .env
+      - docker-compose.env
+    volumes:
+      - ./src:/home/app/libs
+    command: migrate
+
+  # 3.1 Create Super
+  migration-user:
+    image: artemiit/docker-to-k8s:001
+    depends_on:
+      migration:
+        condition: service_completed_successfully
+    x-depends: migration
+    x-type: job
+    env_file:
+      - .env
+      - ./docker-compose.env
+    volumes:
+      - ./src:/home/app/libs
+    command: createsuperuser
+
+  # 4. Application, API and Admin
+  backend:
+    image: artemiit/docker-to-k8s:001
+    depends_on:
+      migration:
+        condition: service_completed_successfully
+    x-depends: migration-user
+    x-type: service
+    ports:
+      - 8000:8000
+    volumes:
+      - ./src:/home/app/libs
+      - ./.log:/tmp/log
+    command: devserver
+    env_file:
+      - .env
+      - ./docker-compose.env
+    x-port: 8000
