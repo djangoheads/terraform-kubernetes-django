@@ -60,7 +60,6 @@ class MyStack(TerraformStack):
                                                    {
                                                        'image': service_res.get('image'),
                                                        'name': 'main',
-                                                       'command': ["/home/app/bin/entrypoint.sh"],
                                                        'args': [service_res.get('command')],
                                                        'env': env_var_objects
                                                    },
@@ -77,7 +76,7 @@ class MyStack(TerraformStack):
                     'image': service_res.get('image'),
                     'name': 'main',
                     'env': env_var_objects
-                } | ({'command': ["/home/app/bin/entrypoint.sh"], 'args': [service_res.get('command')]} if service_res.get('command') else {})
+                } | ({'args': [service_res.get('command')]} if service_res.get('command') else {})
                 deployment_service = deployment.Deployment(self, f"deployment-{name}",
                                                            metadata={
                                                                'labels': {
