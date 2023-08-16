@@ -2,13 +2,13 @@ from constructs import Construct
 from cdktf import App, TerraformStack
 from cdktf_cdktf_provider_kubernetes import job, deployment, provider, service
 import dotenv
+import yaml
 
 
 class MyStack(TerraformStack):
     def __init__(self, scope: Construct, id: str):
         super().__init__(scope, id)
 
-        import yaml
         with open('docker-compose.yml', 'r') as yaml_file:
             resources = yaml.safe_load(yaml_file)
 
@@ -40,6 +40,8 @@ class MyStack(TerraformStack):
                 depends_on.append(init_status_service_map[next(iter(depends.keys()))])
 
             if service_res.get('x-type') == 'job':
+                env_vars = dotenv.dotenv_values("docker-compose.env")
+                env_var_objects = [{"name": key, "value": env_vars[key]} for key in env_vars]
                 job_inst = job.Job(self, f"job-{name}",
                                    metadata={
                                        'name': name,
@@ -59,7 +61,8 @@ class MyStack(TerraformStack):
                                                        'image': service_res.get('image'),
                                                        'name': 'main',
                                                        'command': ["/home/app/bin/entrypoint.sh"],
-                                                       'args': [service_res.get('command')]
+                                                       'args': [service_res.get('command')],
+                                                       'env': env_var_objects
                                                    },
                                                ],
                                            },
