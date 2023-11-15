@@ -4,18 +4,48 @@ resource "kubernetes_deployment" "server" {
     name      = var.name
     namespace = var.namespace
     labels = {
-      "app.kubernetes.io/name" = "${var.namespace}-${var.name}-main"
+      app = var.name
     }
   }
   spec {
     replicas = var.replicas.min
+    selector {
+      match_labels = {
+        app = var.name
+      }
+    }
     template {
-      metadata {}
+      metadata {
+        labels = {
+          app = var.name
+        }
+      }
       spec {
+        init_container {
+          name    = "init-container"
+          image   = var.image
+          command = ["sh", "-c"]
+          args    = var.init_command
+          dynamic "env" {
+            for_each = var.env_vars
+            content {
+              name  = env.key
+              value = env.value
+            }
+          }
+        }
         container {
-          image = "${var.image.name}:${var.image.tag}"
-          name  = "main"
-
+          image   = var.image
+          name    = "main"
+          command = var.command
+          args    = var.args
+          dynamic "env" {
+            for_each = var.env_vars
+            content {
+              name  = env.key
+              value = env.value
+            }
+          }
           # Mounts
           volume_mount {
             name       = var.name
@@ -36,26 +66,6 @@ resource "kubernetes_deployment" "server" {
               container_port = var.port
             }
           }
-          dynamic "readiness_probe" {
-            for_each = var.role == "server" ? [1] : []
-            content {
-              initial_delay_seconds = var.readiness.delay
-              http_get {
-                port = var.readiness.port
-                path = var.readiness.path
-              }
-            }
-          }
-          dynamic "liveness_probe" {
-            for_each = var.role == "server" ? [1] : []
-            content {
-              initial_delay_seconds = var.liveness.delay
-              http_get {
-                port = var.liveness.port
-                path = var.liveness.path
-              }
-            }
-          }
         }
 
         # Volumes 
@@ -63,13 +73,6 @@ resource "kubernetes_deployment" "server" {
           name = var.name
           config_map {
             name = var.name
-          }
-        }
-
-        volume {
-          name = var.name
-          secret {
-            secret_name = var.name
           }
         }
       }

@@ -1,9 +1,9 @@
 variable "role" {
   type        = string
-  description = "The main role of component, can be ingress, server, command, worker, cron"
+  description = "The main role of component, can be ingress, server, command, worker, cron, cloudflare, passbolt"
   validation {
-    condition     = contains(["ingress", "server", "command", "worker", "cron"], var.role)
-    error_message = "${var.role} must be one of: server, command, worker, cron"
+    condition     = contains(["ingress", "server", "command", "worker", "cron", "cloudflare", "passbolt"], var.role)
+    error_message = "${var.role} must be one of: server, command, worker, cron, cloudflare, passbolt"
   }
 }
 
@@ -18,18 +18,24 @@ variable "name" {
 }
 
 variable "image" {
-  type = object({
-    name = string
-    tag  = string
-  })
-  default = {
-    name = null
-    tag  = "latest"
-  }
-  description = "Docker image"
+  type        = string
+  description = "image"
+  default     = ""
 }
 
 variable "command" {
+  type        = list(string)
+  default     = []
+  description = "Override command"
+}
+
+variable "init_command" {
+  type        = list(string)
+  default     = []
+  description = "Override command"
+}
+
+variable "args" {
   type        = list(string)
   default     = []
   description = "Override command"
@@ -78,8 +84,8 @@ variable "replicas" {
     max = number
   })
   default = {
-    min = 3
-    max = -1
+    min = 1
+    max = 1
   }
   description = "Define scalability options"
 }
@@ -145,3 +151,42 @@ variable "ingress" {
   }]
   description = "Ingress configuration"
 }
+variable "env_vars" {
+  description = "Environment variables for the storage module"
+  type        = map(string)
+  default     = {}
+}
+
+variable "cloudflare_api_token" {
+  type      = string
+  sensitive = true
+  default   = "token"
+}
+
+variable "cloudflare_zone_id" {
+  type    = string
+  default = "id"
+}
+
+variable "actions_webhook_value" {
+  type    = string
+  default = "webhook"
+}
+
+variable "acm_cert_domain_name" {
+  type    = string
+  default = "domain.com"
+}
+
+variable "acm_cert_alternative_names" {
+  type = list(any)
+  default = [
+    "domain"
+  ]
+}
+
+variable "ip" {
+  type    = string
+  default = "0.0.0.0"
+}
+

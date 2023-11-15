@@ -6,13 +6,14 @@ resource "kubernetes_service" "server" {
   }
   spec {
     selector = {
-      "app.kubernetes.io/name" = "${var.namespace}-${var.name}-main"
+      app = var.name
     }
     port {
       name        = "main"
       protocol    = "TCP"
-      port        = 80
+      port        = var.port
       target_port = 8000
     }
+    type = "NodePort"
   }
 }

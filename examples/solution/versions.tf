@@ -10,12 +10,16 @@ terraform {
       source  = "hashicorp/time"
       version = ">= 0.9"
     }
-    cloudflare = {
-      source  = "cloudflare/cloudflare"
-      version = "~> 4.0"
+    postgresql = {
+      source  = "cyrilgdn/postgresql"
+      version = "1.17.1"
     }
     helm = {
       source  = "hashicorp/helm"
+    }
+    cloudflare = {
+      source  = "cloudflare/cloudflare"
+      version = "~> 4.0"
     }
   }
 }
