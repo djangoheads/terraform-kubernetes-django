@@ -8,13 +8,13 @@ resource "kubernetes_deployment" "server" {
     replicas = var.replicas.min
     selector {
       match_labels = {
-        app = var.name
+        service = var.name
       }
     }
     template {
       metadata {
         labels = {
-          app = var.name
+          service = var.name
         }
       }
       spec {
