@@ -3,9 +3,6 @@ resource "kubernetes_deployment" "server" {
   metadata {
     name      = var.name
     namespace = var.namespace
-    labels = {
-      app = var.name
-    }
   }
   spec {
     replicas = var.replicas.min
@@ -46,18 +43,6 @@ resource "kubernetes_deployment" "server" {
               value = env.value
             }
           }
-          # Mounts
-          volume_mount {
-            name       = var.name
-            mount_path = "/etc/app/config"
-            read_only  = true
-          }
-
-          volume_mount {
-            name       = var.name
-            mount_path = "/etc/app/secrets"
-            read_only  = true
-          }
 
           # Server part
           dynamic "port" {
@@ -65,14 +50,6 @@ resource "kubernetes_deployment" "server" {
             content {
               container_port = var.port
             }
-          }
-        }
-
-        # Volumes 
-        volume {
-          name = var.name
-          config_map {
-            name = var.name
           }
         }
       }
