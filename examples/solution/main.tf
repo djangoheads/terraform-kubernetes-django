@@ -40,7 +40,7 @@ module "backend" {
   config    = local.config
   secrets   = local.secrets
   port =  8000
-  targettarget_port = 8000
+  target_port = 8000
   command = ["/home/app/bin/entrypoint.sh"]
   args = ["devserver"]
   init_command = ["for i in {1..100}; do sleep 1; if django-admin migrate --check; then exit 0; fi; done; exit 1"]
