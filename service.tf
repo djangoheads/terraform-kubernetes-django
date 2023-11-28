@@ -12,7 +12,7 @@ resource "kubernetes_service" "server" {
       name        = "main"
       protocol    = "TCP"
       port        = var.port
-      target_port = 8000
+      target_port = var.target_port
     }
     type = "NodePort"
   }

@@ -95,6 +95,11 @@ variable "port" {
   default     = 8000
   description = "Port to expose"
 }
+variable "target_port" {
+  type        = number
+  default     = 8000
+  description = "Port to expose"
+}
 
 variable "readiness" {
   type = object({
