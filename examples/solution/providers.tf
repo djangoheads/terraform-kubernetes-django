@@ -11,13 +11,13 @@ data "aws_eks_cluster_auth" "main" {
 }
 
 provider "aws" {
-  region                      = "eu-central-1"
+  region                      = var.aws_region
   skip_metadata_api_check     = true
   skip_region_validation      = true
   skip_credentials_validation = true
 
   assume_role {
-    role_arn    = "arn:aws:iam::387673871354:role/OrganizationAccountAccessRole"
+    role_arn    = var.aws_role
   }
 }
 

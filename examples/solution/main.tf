@@ -3,7 +3,7 @@ module "migrate" {
   source = "../../"
 
   role      = "command"
-  namespace = local.namespace
+  namespace = var.namespace
   name      = "${local.name}-migrate"
   image     = var.image
   config    = local.config
@@ -19,7 +19,7 @@ module "migrate-user" {
   source = "../../"
 
   role      = "command"
-  namespace = local.namespace
+  namespace = var.namespace
   name      = "${local.name}-migrate-user"
   image     = var.image
   config    = local.config
@@ -34,7 +34,7 @@ module "backend" {
   # source = "github.com/djangoheads/terraform-kubernetes-django"
   source = "../../"
   role      = "server"
-  namespace = local.namespace
+  namespace = var.namespace
   name      = "${local.name}-backend"
   image     =  var.image
   config    = local.config

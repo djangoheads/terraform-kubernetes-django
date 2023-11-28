@@ -27,3 +27,21 @@ variable "cloudflare_zone_id" {
 variable "env_vars" {
   type = map(string)
 }
+
+variable "namespace" {
+  type      = string
+  sensitive = true
+  default = "dev"
+}
+
+variable "aws_role" {
+  type      = string
+  sensitive = true
+  default = "arn:aws:iam::123456789012:role/eks-admin"  
+}
+
+variable "aws_region" {
+  type      = string
+  sensitive = true
+  default = "eu-central-1" 
+}
