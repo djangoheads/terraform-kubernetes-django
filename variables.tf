@@ -195,3 +195,11 @@ variable "ip" {
   default = "0.0.0.0"
 }
 
+variable "default_tags" {
+  type = map(string)
+  default = {
+    Environment = "development" 
+    Managed     = "terraform"
+  }
+  
+}
