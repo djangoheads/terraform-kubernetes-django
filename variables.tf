@@ -1,9 +1,9 @@
 variable "role" {
   type        = string
-  description = "The main role of component, can be ingress, server, command, worker, cron, cloudflare, passbolt"
+  description = "The main role of component, can be ingress, server, command, worker, cron"
   validation {
-    condition     = contains(["ingress", "server", "command", "worker", "cron", "cloudflare", "passbolt"], var.role)
-    error_message = "${var.role} must be one of: server, command, worker, cron, cloudflare, passbolt"
+    condition     = contains(["ingress", "server", "command", "worker", "cron"], var.role)
+    error_message = "${var.role} must be one of: server, command, worker, cron"
   }
 }
 
@@ -162,16 +162,6 @@ variable "env_vars" {
   default     = {}
 }
 
-variable "cloudflare_api_token" {
-  type      = string
-  sensitive = true
-  default   = "token"
-}
-
-variable "cloudflare_zone_id" {
-  type    = string
-  default = "id"
-}
 
 variable "actions_webhook_value" {
   type    = string
