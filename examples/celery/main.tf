@@ -17,7 +17,7 @@ module "worker" {
   # source = "github.com/djangoheads/terraform-kubernetes-django"
   source = "../../"
 
-  role      = "server"
+  role      = "job"
   namespace = local.namespace
   name      = "${local.name}-worker"
   image     = local.image
