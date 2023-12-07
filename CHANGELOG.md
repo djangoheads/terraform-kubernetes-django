@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.0](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.2.1...v1.3.0) (2023-12-07)
+
+
+### Features
+
+* **doc:** Update README.md ([4a536c7](https://github.com/djangoheads/terraform-kubernetes-django/commit/4a536c7a08549a56b8a7c0106ab7e1968d989943))
+* Update main.tf ([0c4622e](https://github.com/djangoheads/terraform-kubernetes-django/commit/0c4622e87b8c5375e867899866e4788ac24d4c85))
+* Update README.md ([f8ef88e](https://github.com/djangoheads/terraform-kubernetes-django/commit/f8ef88e300074bbf9f361815d1cf8c806990a10d))
+
 ### [1.2.1](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.2.0...v1.2.1) (2023-05-21)
 
 
