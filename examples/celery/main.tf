@@ -17,7 +17,7 @@ module "worker" {
   # source = "github.com/djangoheads/terraform-kubernetes-django"
   source = "../../"
 
-  role      = "job"
+  role      = "worker"
   namespace = local.namespace
   name      = "${local.name}-worker"
   image     = local.image
@@ -33,7 +33,7 @@ module "beat" {
   # source = "github.com/djangoheads/terraform-kubernetes-django"
   source = "../../"
 
-  role      = "server"
+  role      = "worker"
   namespace = local.namespace
   name      = "${local.name}-beat"
   image     = local.image
