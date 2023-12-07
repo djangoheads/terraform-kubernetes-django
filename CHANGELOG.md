@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.4.1](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.4.0...v1.4.1) (2023-12-07)
+
+
+### Bug Fixes
+
+* server to job typo ([412baf5](https://github.com/djangoheads/terraform-kubernetes-django/commit/412baf5f9f4885fb4f4fe80db2b746a731e25382))
+
 ## [1.4.0](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.3.0...v1.4.0) (2023-12-07)
 
 
