@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.0](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.3.0...v1.4.0) (2023-12-07)
+
+
+### Features
+
+* Create simple ingress.tf ([6b84204](https://github.com/djangoheads/terraform-kubernetes-django/commit/6b842047237c4e050ecf58485a146b49f0269d27))
+
 ## [1.3.0](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.2.1...v1.3.0) (2023-12-07)
 
 
