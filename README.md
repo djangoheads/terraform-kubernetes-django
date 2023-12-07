@@ -1,3 +1,3 @@
 # Terraform universal Django module 
 
-see: /examples
+see: [Examples](/examples)
