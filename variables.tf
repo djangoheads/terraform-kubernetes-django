@@ -18,18 +18,24 @@ variable "name" {
 }
 
 variable "image" {
-  type = object({
-    name = string
-    tag  = string
-  })
-  default = {
-    name = null
-    tag  = "latest"
-  }
-  description = "Docker image"
+  type        = string
+  description = "image"
+  default     = ""
 }
 
 variable "command" {
+  type        = list(string)
+  default     = []
+  description = "Override command"
+}
+
+variable "init_command" {
+  type        = list(string)
+  default     = []
+  description = "Override command"
+}
+
+variable "args" {
   type        = list(string)
   default     = []
   description = "Override command"
@@ -78,13 +84,18 @@ variable "replicas" {
     max = number
   })
   default = {
-    min = 3
-    max = -1
+    min = 1
+    max = 1
   }
   description = "Define scalability options"
 }
 
 variable "port" {
+  type        = number
+  default     = 8000
+  description = "Port to expose"
+}
+variable "target_port" {
   type        = number
   default     = 8000
   description = "Port to expose"
@@ -144,4 +155,41 @@ variable "ingress" {
     }]
   }]
   description = "Ingress configuration"
+}
+variable "env_vars" {
+  description = "Environment variables for the storage module"
+  type        = map(string)
+  default     = {}
+}
+
+
+variable "actions_webhook_value" {
+  type    = string
+  default = "webhook"
+}
+
+variable "acm_cert_domain_name" {
+  type    = string
+  default = "domain.com"
+}
+
+variable "acm_cert_alternative_names" {
+  type = list(any)
+  default = [
+    "domain"
+  ]
+}
+
+variable "ip" {
+  type    = string
+  default = "0.0.0.0"
+}
+
+variable "default_tags" {
+  type = map(string)
+  default = {
+    Environment = "development" 
+    Managed     = "terraform"
+  }
+  
 }
