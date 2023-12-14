@@ -17,36 +17,24 @@ resource "kubernetes_deployment" "server" {
         }
       }
       spec {
-        init_container {
-          name    = "init-container"
-          image   = var.image
-          command = ["sh", "-c"]
-          args    = var.init_command
-          dynamic "env" {
-            for_each = var.environment
-            content {
-              name  = env.key
-              value = env.value
-            }
-          }
-        }
+#        init_container {
+#          name    = "init-container"
+#          image   = var.image
+#          command = ["sh", "-c"]
+#          args    = var.init_command
+#          dynamic "env" {
+#            for_each = var.environment
+#            content {
+#              name  = env.key
+#              value = env.value
+#            }
+#          }
+#        }
         container {
           image   = var.image
           name    = "main"
           command = var.command
           args    = var.args
-          dynamic "env" {
-            for_each = var.environment
-            content {
-              name  = env.key
-              value = env.value
-            }
-          }
-
-          # Server part
-          content {
-            container_port = var.port
-          }
         }
       }
     }
@@ -55,8 +43,7 @@ resource "kubernetes_deployment" "server" {
   wait_for_rollout = var.wait
 
   depends_on = [
-    kubernetes_config_map.main,
-    kubernetes_secret.main
+    module.config,
   ]
 }
 
