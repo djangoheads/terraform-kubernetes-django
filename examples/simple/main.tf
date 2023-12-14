@@ -1,58 +1,47 @@
 module "migrate" {
   # Main options 
-  # source = "github.com/djangoheads/terraform-kubernetes-django"
-  source = "../../"
-  role   = "command"
+  # source = "github.com/djangoheads/terraform-kubernetes-django/modules/command?ref=v0.1.0"
+  source = "../../modules/command"
 
-  # Common options
-  namespace = local.namespace
-  image     = local.image
-  config    = yamlencode(merge(yamldecode(local.config), { "ANOTHER" : "VALUE" }))
-  secrets   = local.secrets
+  namespace = var.namespace
+  name    = "${var.name}-migrate"
+
+  dynaconf  = {
+    config  = local.config
+    secrets = local.secrets
+  }
 
   # Specific options
-  name    = "${local.name}-migrate"
-  command = ["migrate"]
+#    image     = local.image
 }
 
 module "server" {
   # Main options 
-  # source = "github.com/djangoheads/terraform-kubernetes-django"
-  source = "../../"
-  role   = "server"
+  # source = "github.com/djangoheads/terraform-kubernetes-django/modules/server?ref=v0.1.0"
+  source = "../../modules/server"
 
-  # Common options
-  namespace = local.namespace
-  image     = local.image
-  config    = local.config
-  secrets   = local.secrets
+  namespace = var.namespace
+  name    = "${var.name}-migrate"
 
-  # Specific options
-  name = "${local.name}-server"
-
-  depends_on = [
-    module.migrate
-  ]
+  dynaconf  = {
+    config  = local.config
+    secrets = local.secrets
+  }
 }
 
 module "ingress" {
   # Main options 
   # source = "github.com/djangoheads/terraform-kubernetes-django"
-  source = "../../"
-  role   = "ingress"
+  source = "../../modules/ingress"
+  cloud   = "none"
 
   # Common options
-  namespace = local.namespace
-
-  # NOTE: NOT USED, TODO: REFACTOR, BUT REQUIRED TO PUT HERE
-  image   = local.image
-  config  = local.config
-  secrets = local.secrets
+  namespace = var.namespace
+  name = "${var.name}-main"
 
   # Specific options
-  name = "${local.name}-ingress"
 
-  ingress = [{
+  rules = [{
     host = "admin.somedomain.com"
     paths = [{
       path = "/admin/"
@@ -62,8 +51,4 @@ module "ingress" {
       }
     }]
   }]
-
-  depends_on = [
-    module.migrate
-  ]
 }
