@@ -29,11 +29,11 @@ variable "command" {
   description = "Override command"
 }
 
-variable "init_command" {
-  type        = list(string)
-  default     = []
-  description = "Override command"
-}
+# variable "init_command" {
+#   type        = list(string)
+#   default     = []
+#   description = "Override command"
+# }
 
 variable "args" {
   type        = list(string)
@@ -70,30 +70,30 @@ variable "target_port" {
   description = "Port to expose"
 }
 
-variable "readiness" {
-  type = object({
-    delay = number
-    port  = number
-    path  = string
-  })
-  default = {
-    delay = 10
-    port  = 8000
-    path  = "/health-check"
-  }
-  description = "Readiness rules for Server"
-}
+# variable "readiness" {
+#   type = object({
+#     delay = number
+#     port  = number
+#     path  = string
+#   })
+#   default = {
+#     delay = 10
+#     port  = 8000
+#     path  = "/health-check"
+#   }
+#   description = "Readiness rules for Server"
+# }
 
-variable "liveness" {
-  type = object({
-    delay = number
-    port  = number
-    path  = string
-  })
-  default = {
-    delay = 60
-    port  = 8000
-    path  = "/health-check"
-  }
-  description = "Liveness rules for Server"
-}
+# variable "liveness" {
+#   type = object({
+#     delay = number
+#     port  = number
+#     path  = string
+#   })
+#   default = {
+#     delay = 60
+#     port  = 8000
+#     path  = "/health-check"
+#   }
+#   description = "Liveness rules for Server"
+# }

@@ -3,7 +3,7 @@
 resource "kubernetes_config_map" "dynaconf" {
   metadata {
     namespace = var.namespace
-    name      = var.name + "-dynaconf"
+    name      = "${var.name}-dynaconf"
   }
 
   data = {
@@ -15,7 +15,7 @@ resource "kubernetes_config_map" "dynaconf" {
 resource "kubernetes_secret" "dynaconf" {
   metadata {
     namespace = var.namespace
-    name      = var.name + "-dynaconf"
+    name      = "${var.name}-dynaconf"
   }
 
   data = {

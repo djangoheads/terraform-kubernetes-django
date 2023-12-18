@@ -1,4 +1,4 @@
-resource "kubernetes_ingress_v1" "main" {
+resource "kubernetes_ingress_v1" "main_ingress" {
   count       = var.cloud == "aws" ? 1 : 0
   metadata {
     name      = var.name
@@ -14,7 +14,7 @@ resource "kubernetes_ingress_v1" "main" {
 
   spec {
     dynamic "rule" {
-      for_each = var.ingress
+      for_each = var.rules
       content {
         host = rule.value["host"]
         http {

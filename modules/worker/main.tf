@@ -35,23 +35,6 @@ resource "kubernetes_deployment" "server" {
           name    = "main"
           command = var.command
           args    = var.args
-          volume_mount {
-            name       = "${var.name}-dynaconf"
-            mount_path = "/etc/app/config"
-            read_only  = true
-          }
-
-          volume_mount {
-            name       = "${var.name}-dynaconf"
-            mount_path = "/etc/app/secrets"
-            read_only  = true
-          }
-        }
-        volume {
-          name = "${var.name}-dynaconf"
-          config_map {
-            name = "${var.name}-dynaconf"
-          }
         }
       }
     }
