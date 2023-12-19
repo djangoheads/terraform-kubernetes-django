@@ -37,13 +37,13 @@ resource "kubernetes_deployment" "server" {
           args    = var.args
           volume_mount {
             name       = "${var.name}-dynaconf"
-            mount_path = "/etc/app/config"
+            mount_path = "/home/app/config"
             read_only  = true
           }
 
           volume_mount {
             name       = "${var.name}-dynaconf"
-            mount_path = "/etc/app/secrets"
+            mount_path = "/home/app/config"
             read_only  = true
           }
         }
