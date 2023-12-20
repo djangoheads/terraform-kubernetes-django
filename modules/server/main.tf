@@ -47,17 +47,14 @@ resource "kubernetes_deployment" "server" {
             mount_path = "/home/app/config"
             read_only  = true
           }
-
-          volume_mount {
-            name       = "${var.name}-dynaconf"
-            mount_path = "/home/app/config"
-            read_only  = true
-          }
         }
         volume {
           name = "${var.name}-dynaconf"
           config_map {
             name = "${var.name}-dynaconf"
+          }
+          secret {
+            secret_name = "${var.name}-dynaconf"
           }
         }
       }
