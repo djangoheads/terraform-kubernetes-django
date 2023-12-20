@@ -20,10 +20,27 @@ resource "kubernetes_job" "command" {
           args    = var.args
 
           # Mounts
+          volume_mount {
+            name       = "${var.name}-dynaconf"
+            mount_path = "/home/app/config"
+            read_only  = true
+          }
+
+          volume_mount {
+            name       = "${var.name}-dynaconf"
+            mount_path = "/home/app/config"
+            read_only  = true
+          }
         }
         restart_policy = "Never"
 
         # Volumes 
+        volume {
+          name = "${var.name}-dynaconf"
+          config_map {
+            name = "${var.name}-dynaconf"
+          }
+        }
 
       }
     }
