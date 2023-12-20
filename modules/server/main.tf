@@ -35,6 +35,13 @@ resource "kubernetes_deployment" "server" {
           name    = "main"
           command = var.command
           args    = var.args
+          dynamic "env" {
+            for_each = var.env_vars
+            content {
+              name  = env.key
+              value = env.value
+            }
+          }
           volume_mount {
             name       = "${var.name}-dynaconf"
             mount_path = "/home/app/config"

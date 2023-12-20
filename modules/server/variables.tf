@@ -69,6 +69,11 @@ variable "target_port" {
   default     = 8000
   description = "Port to expose"
 }
+variable "env_vars" {
+  description = "Environment variables for the storage module"
+  type        = map(string)
+  default     = {}
+}
 
 # variable "readiness" {
 #   type = object({
