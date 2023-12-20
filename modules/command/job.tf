@@ -21,7 +21,12 @@ resource "kubernetes_job" "command" {
 
           # Mounts
           volume_mount {
-            name       = "${var.name}-dynaconf"
+            name       = "${var.name}-settings"
+            mount_path = "/home/app/config"
+            read_only  = true
+          }
+          volume_mount {
+            name       = "${var.name}-secrets"
             mount_path = "/home/app/config"
             read_only  = true
           }
@@ -30,10 +35,13 @@ resource "kubernetes_job" "command" {
 
         # Volumes 
         volume {
-          name = "${var.name}-dynaconf"
+          name = "${var.name}-settings"
           config_map {
             name = "${var.name}-dynaconf"
           }
+        }
+        volume {
+          name = "${var.name}-secrets"
           secret {
             secret_name = "${var.name}-dynaconf"
           }
