@@ -44,12 +44,14 @@ resource "kubernetes_deployment" "server" {
           }
           volume_mount {
             name       = "${var.name}-settings"
-            mount_path = "/home/app/config"
+            mount_path = "/home/app/config/override.yaml"
+            sub_path = "override.yaml"
             read_only  = true
           }
           volume_mount {
             name       = "${var.name}-secrets"
-            mount_path = "/home/app/config"
+            mount_path = "/home/app/config/.secrets.yaml"
+            sub_path = ".secrets.yaml"
             read_only  = true
           }
         }
