@@ -18,14 +18,30 @@ resource "kubernetes_job" "command" {
           image   = var.image
           command = var.command
           args    = var.args
-          env_from {
-            secret_ref {
-              name = "${var.name}-dynaconf"
+           dynamic "env" {
+            for_each = data.kubernetes_secret.dynaconf.data
+            content {
+              name  = env.key
+              value_from {
+                secret_key_ref {
+                  name = "${var.name}-dynaconf"
+                  key  = env.key
+                }
+              }
             }
           }
-          env_from {
-            config_map_ref {
-              name = "${var.name}-dynaconf"
+
+          # Variables from ConfigMap
+          dynamic "env" {
+            for_each = data.kubernetes_config_map.dynaconf.data
+            content {
+              name  = env.key
+              value_from {
+                config_map_key_ref {
+                  name = "${var.name}-dynaconf"
+                  key  = env.key
+                }
+              }
             }
           }
           # Mounts
