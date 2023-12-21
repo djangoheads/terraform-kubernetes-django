@@ -29,6 +29,16 @@ resource "kubernetes_deployment" "server" {
               value = env.value
             }
           }
+        volume_mount {
+            name       = "${var.name}-settings"
+            mount_path = "/var/etc/config"
+            read_only  = true
+          }
+        volume_mount {
+          name       = "${var.name}-secrets"
+          mount_path = "/var/etc/secrets"
+          read_only  = true
+        }
        }
         container {
           image   = var.image
