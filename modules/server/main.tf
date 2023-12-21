@@ -1,3 +1,15 @@
+data "kubernetes_config_map" "dynaconf" {
+  metadata {
+    name      = "${var.name}-dynaconf"
+    namespace = var.namespace
+  }
+}
+data "kubernetes_secret" "dynaconf" {
+  metadata {
+    name      = "${var.name}-dynaconf"
+    namespace = var.namespace
+  }
+}
 resource "kubernetes_deployment" "server" {
   metadata {
     name      = var.name
