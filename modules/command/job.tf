@@ -22,13 +22,13 @@ resource "kubernetes_job" "command" {
           # Mounts
           volume_mount {
             name       = "${var.name}-settings"
-            mount_path = "/home/app/config/override.yaml"
+            mount_path = "/home/app/config"
             sub_path   = "override.yaml" 
             read_only  = true
           }
           volume_mount {
             name       = "${var.name}-secrets"
-            mount_path = "/home/app/config/.secrets.yaml"
+            mount_path = "/home/app/config"
             sub_path   = ".secrets.yaml"
             read_only  = true
           }
