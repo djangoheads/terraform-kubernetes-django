@@ -11,7 +11,6 @@ data "kubernetes_secret" "dynaconf" {
   }
 }
 resource "kubernetes_deployment" "server" {
-  depends_on = [ module.config ]
   metadata {
     name      = var.name
     namespace = var.namespace
