@@ -42,7 +42,7 @@ resource "kubernetes_deployment" "server" {
               value = env.value
             }
           }
-          dynamic "auth0_env" {
+          dynamic "env" {
             for_each = var.auth0_env_vars
             content {
               name  = env.key
