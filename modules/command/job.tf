@@ -18,34 +18,43 @@ resource "kubernetes_job" "command" {
           image   = var.image
           command = var.command
           args    = var.args
-
+          env_from {
+            secret_ref {
+              name = "${var.name}-dynaconf"
+            }
+          }
+          env_from {
+            config_map_ref {
+              name = "${var.name}-dynaconf"
+            }
+          }
           # Mounts
-          volume_mount {
-            name       = "${var.name}-settings"
-            mount_path = "/var/etc/config"
-            read_only  = true
-          }
-          volume_mount {
-            name       = "${var.name}-secrets"
-            mount_path = "/var/etc/secrets"
-            read_only  = true
-          }
+          # volume_mount {
+          #   name       = "${var.name}-settings"
+          #   mount_path = "/var/etc/config"
+          #   read_only  = true
+          # }
+          # volume_mount {
+          #   name       = "${var.name}-secrets"
+          #   mount_path = "/var/etc/secrets"
+          #   read_only  = true
+          # }
         }
         restart_policy = "Never"
 
         # Volumes 
-        volume {
-          name = "${var.name}-settings"
-          config_map {
-            name = "${var.name}-dynaconf"
-          }
-        }
-        volume {
-          name = "${var.name}-secrets"
-          secret {
-            secret_name = "${var.name}-dynaconf"
-          }
-        }
+        # volume {
+        #   name = "${var.name}-settings"
+        #   config_map {
+        #     name = "${var.name}-dynaconf"
+        #   }
+        # }
+        # volume {
+        #   name = "${var.name}-secrets"
+        #   secret {
+        #     secret_name = "${var.name}-dynaconf"
+        #   }
+        # }
 
       }
     }

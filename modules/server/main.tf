@@ -35,6 +35,16 @@ resource "kubernetes_deployment" "server" {
           name    = "main"
           command = var.command
           args    = var.args
+          env_from {
+            secret_ref {
+              name = "${var.name}-dynaconf"
+            }
+          }
+          env_from {
+            config_map_ref {
+              name = "${var.name}-dynaconf"
+            }
+          }
           dynamic "env" {
             for_each = var.env_vars
             content {
@@ -42,29 +52,29 @@ resource "kubernetes_deployment" "server" {
               value = env.value
             }
           }
-          volume_mount {
-            name       = "${var.name}-settings"
-            mount_path = "/var/etc/config"
-            read_only  = true
-          }
-          volume_mount {
-            name       = "${var.name}-secrets"
-            mount_path = "/var/etc/secrets"
-            read_only  = true
-          }
+          # volume_mount {
+          #   name       = "${var.name}-settings"
+          #   mount_path = "/var/etc/config"
+          #   read_only  = true
+          # }
+          # volume_mount {
+          #   name       = "${var.name}-secrets"
+          #   mount_path = "/var/etc/secrets"
+          #   read_only  = true
+          # }
         }
-        volume {
-          name = "${var.name}-settings"
-          config_map {
-            name = "${var.name}-dynaconf"
-          }
-        }
-        volume {
-          name = "${var.name}-secrets"
-          secret {
-            secret_name = "${var.name}-dynaconf"
-          }
-        }
+        # volume {
+        #   name = "${var.name}-settings"
+        #   config_map {
+        #     name = "${var.name}-dynaconf"
+        #   }
+        # }
+        # volume {
+        #   name = "${var.name}-secrets"
+        #   secret {
+        #     secret_name = "${var.name}-dynaconf"
+        #   }
+        # }
       }
     }
   }
