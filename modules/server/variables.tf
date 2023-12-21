@@ -79,6 +79,11 @@ variable "auth0_env_vars" {
   type        = map(string)
   default     = {}
 }
+variable "init_command" {
+  type        = list(string)
+  default     = []
+  description = "Override command"
+}
 
 # variable "readiness" {
 #   type = object({
