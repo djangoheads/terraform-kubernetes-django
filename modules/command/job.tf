@@ -18,6 +18,13 @@ resource "kubernetes_job" "command" {
           image   = var.image
           command = var.command
           args    = var.args
+          dynamic "env" {
+            for_each = var.env_vars
+            content {
+              name  = env.key
+              value = env.value
+            }
+          }
 
           # Mounts
           volume_mount {

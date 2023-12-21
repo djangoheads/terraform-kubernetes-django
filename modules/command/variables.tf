@@ -40,3 +40,8 @@ variable "wait" {
   default     = true
   description = "Perform waiting resource to be available and run"
 }
+variable "env_vars" {
+  description = "Environment variables for the storage module"
+  type        = map(string)
+  default     = {}
+}
