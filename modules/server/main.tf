@@ -23,12 +23,12 @@ resource "kubernetes_deployment" "server" {
          command = ["sh", "-c"]
          args    = var.init_command
          dynamic "env" {
-           for_each = var.env_vars
-           content {
-             name  = env.key
-             value = env.value
-           }
-         }
+            for_each = var.env_vars
+            content {
+              name  = env.key
+              value = env.value
+            }
+          }
        }
         container {
           image   = var.image
