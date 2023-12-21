@@ -74,6 +74,11 @@ variable "env_vars" {
   type        = map(string)
   default     = {}
 }
+variable "auth0_env_vars" {
+  description = "Environment variables for the storage module"
+  type        = map(string)
+  default     = {}
+}
 
 # variable "readiness" {
 #   type = object({

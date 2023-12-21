@@ -42,6 +42,13 @@ resource "kubernetes_deployment" "server" {
               value = env.value
             }
           }
+          dynamic "auth0_env" {
+            for_each = var.auth0_env_vars
+            content {
+              name  = env.key
+              value = env.value
+            }
+          }
           volume_mount {
             name       = "${var.name}-settings"
             mount_path = "/var/etc/config"
