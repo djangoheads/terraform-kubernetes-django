@@ -11,6 +11,7 @@ data "kubernetes_secret" "dynaconf" {
   }
 }
 resource "kubernetes_job" "command" {
+  depends_on = [ module.config ]
   metadata {
     namespace = var.namespace
     name      = var.name
