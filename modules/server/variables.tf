@@ -71,12 +71,8 @@ variable "target_port" {
 }
 variable "env_vars" {
   description = "Environment variables for the storage module"
-  type        = list(map(string))
-  default = [ {
-    "name" = "value"
-  }, {
-    "name" = "value"
-  } ]
+  type        = map(string)
+  default     = {}
 }
 variable "init_command" {
   type        = list(string)
