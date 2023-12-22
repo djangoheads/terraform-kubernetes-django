@@ -5,7 +5,7 @@ resource "kubernetes_job" "command" {
   }
   spec {
     ttl_seconds_after_finished = 100
-    backoff_limit = 1
+    backoff_limit = 5
     template {
       metadata {
         labels = {

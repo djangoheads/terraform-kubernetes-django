@@ -71,13 +71,12 @@ variable "target_port" {
 }
 variable "env_vars" {
   description = "Environment variables for the storage module"
-  type        = map(string)
-  default     = {}
-}
-variable "auth0_env_vars" {
-  description = "Environment variables for the storage module"
-  type        = map(string)
-  default     = {}
+  type        = list(map(string))
+  default = [ {
+    "name" = "value"
+  }, {
+    "name" = "value"
+  } ]
 }
 variable "init_command" {
   type        = list(string)
