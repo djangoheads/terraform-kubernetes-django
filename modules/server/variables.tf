@@ -29,12 +29,6 @@ variable "command" {
   description = "Override command"
 }
 
-# variable "init_command" {
-#   type        = list(string)
-#   default     = []
-#   description = "Override command"
-# }
-
 variable "args" {
   type        = list(string)
   default     = []
