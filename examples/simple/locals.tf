@@ -1,4 +1,4 @@
 locals {
-  config  = file(var.config)
+  settings  = file(var.config)
   secrets = file(var.secrets)
 }

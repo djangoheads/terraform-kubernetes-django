@@ -1,7 +1,5 @@
-
-
-module "config" {
-  source = "../config"
+module "dynaconf" {
+  source = "../dynaconf"
 
   name = var.name
   namespace = var.namespace

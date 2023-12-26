@@ -73,6 +73,14 @@ variable "init_command" {
   default     = []
   description = "Override command"
 }
+variable "settings_mount_path" {
+  type = string
+  default = "/var/etc/config"
+}
+variable "secrets_mount_path" {
+  type = string
+  default = "/var/etc/secrets"
+}
 
 # variable "readiness" {
 #   type = object({

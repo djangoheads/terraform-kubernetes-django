@@ -45,3 +45,12 @@ variable "env_vars" {
   type        = map(string)
   default     = {}
 }
+
+variable "settings_mount_path" {
+  type = string
+  default = "/var/etc/config"
+}
+variable "secrets_mount_path" {
+  type = string
+  default = "/var/etc/secrets"
+}

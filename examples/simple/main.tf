@@ -7,12 +7,15 @@ module "migrate" {
   name    = "${var.name}-migrate"
 
   dynaconf  = {
-    config  = local.config
+    settings  = local.settings
     secrets = local.secrets
   }
 
   # Specific options
-#    image     = local.image
+  image     = var.image
+  command = [ "echo" ]
+  args = [ "123" ]
+  wait = false
 }
 
 module "server" {
@@ -21,12 +24,19 @@ module "server" {
   source = "../../modules/server"
 
   namespace = var.namespace
-  name    = "${var.name}-migrate"
+  name    = "${var.name}-server"
 
   dynaconf  = {
-    config  = local.config
+    settings  = local.settings
     secrets = local.secrets
   }
+  # Specific options
+  image     = var.image
+  command = ["/bin/bash", "-c", "tail -f /dev/null"]
+  args = []
+  port = 8000
+  target_port = 8000
+  wait = false
 }
 
 module "ingress" {

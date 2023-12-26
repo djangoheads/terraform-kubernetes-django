@@ -30,15 +30,15 @@ resource "kubernetes_deployment" "server" {
             }
           }
         volume_mount {
-            name       = "${var.name}-settings"
-            mount_path = "/var/etc/config"
+            name       = "${var.name}-dynaconf-settings"
+            mount_path = var.settings_mount_path
             read_only  = true
           }
-        volume_mount {
-          name       = "${var.name}-secrets"
-          mount_path = "/var/etc/secrets"
-          read_only  = true
-        }
+          volume_mount {
+            name       = "${var.name}-dynaconf-secrets"
+            mount_path = var.secrets_mount_path 
+            read_only  = true
+          }
        }
         container {
           image   = var.image
@@ -53,24 +53,24 @@ resource "kubernetes_deployment" "server" {
             }
           }
           volume_mount {
-            name       = "${var.name}-settings"
-            mount_path = "/var/etc/config"
+            name       = "${var.name}-dynaconf-settings"
+            mount_path = var.settings_mount_path
             read_only  = true
           }
           volume_mount {
-            name       = "${var.name}-secrets"
-            mount_path = "/var/etc/secrets"
+            name       = "${var.name}-dynaconf-secrets"
+            mount_path = var.secrets_mount_path 
             read_only  = true
           }
         }
         volume {
-          name = "${var.name}-settings"
+          name = "${var.name}-dynaconf-settings" 
           config_map {
             name = "${var.name}-dynaconf"
           }
         }
         volume {
-          name = "${var.name}-secrets"
+          name = "${var.name}-dynaconf-secrets"
           secret {
             secret_name = "${var.name}-dynaconf"
           }
