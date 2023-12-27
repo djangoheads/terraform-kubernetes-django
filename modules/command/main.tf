@@ -18,6 +18,7 @@ resource "kubernetes_job" "command" {
           image   = var.image
           command = var.command
           args    = var.args
+          image_pull_policy = var.image_pull_policy
           dynamic "env" {
             for_each = var.env_vars
             content {

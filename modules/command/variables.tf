@@ -54,3 +54,9 @@ variable "secrets_mount_path" {
   type = string
   default = "/var/etc/secrets"
 }
+
+variable "image_pull_policy" {
+  type        = string
+  default     = "IfNotPresent"
+  description = "Image pull policy"
+}

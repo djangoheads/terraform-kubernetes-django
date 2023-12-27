@@ -24,6 +24,7 @@ resource "kubernetes_deployment" "server" {
           image   = var.image
           command = ["sh", "-c"]
           args    = var.init_command
+          image_pull_policy = var.image_pull_policy
           dynamic "env" {
               for_each = var.env_vars
               content {
@@ -48,6 +49,7 @@ resource "kubernetes_deployment" "server" {
           name    = "main"
           command = var.command
           args    = var.args
+          image_pull_policy = var.image_pull_policy
           dynamic "env" {
             for_each = var.env_vars
             content {
