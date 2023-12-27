@@ -42,8 +42,8 @@ jobs:
       - name: terraform init and apply
         run: |
           cd examples/simple/
-          terraform init
-          terraform apply
+          terraform init -upgrade
+          terraform apply -auto-approve
 
       - name: Test application
         run: |
