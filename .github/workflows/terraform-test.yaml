@@ -5,7 +5,6 @@ on:
     branches:
       - sb/refactor/core-structure
 
-
 jobs:
   release:
     name: Test
@@ -34,9 +33,6 @@ jobs:
         run: |
           cd dummy/
           docker build -t djangoheads/dummy:latest .
-          docker run -d -p 8000:8000 -e DJANGO_SECRET_KEY=local -e DJANGO_DEBUG=1 \
-          -e DJANGO_DATABASES__default__NAME=/tmp/db.sqlite3 \
-          djangoheads/dummy:latest devserver
       
       - name: Load image to minikube
         run: |
@@ -47,6 +43,11 @@ jobs:
         run: |
           cd examples/simple/
           terraform init
-      - name: test server
+          terraform apply
+
+      - name: Test application
         run: |
-          nc -v localhost 8000
+          kubectl port-forward service/your-service-name 8000:8000
+          curl http://localhost:8000
+          echo $?
+          

@@ -115,7 +115,7 @@ resource "kubernetes_service" "server" {
   }
   spec {
     selector = {
-      app = var.name
+      service = var.name
     }
     port {
       name        = "main"
