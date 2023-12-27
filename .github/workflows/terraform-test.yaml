@@ -47,7 +47,7 @@ jobs:
 
       - name: Test application
         run: |
-          kubectl port-forward service/your-service-name 8000:8000
+          kubectl port-forward service/django-server 8000:8000
           curl http://localhost:8000
           echo $?
           
