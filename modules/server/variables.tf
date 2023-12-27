@@ -82,6 +82,7 @@ variable "secrets_mount_path" {
   default = "/var/etc/secrets"
 }
 
+
 # variable "readiness" {
 #   type = object({
 #     delay = number

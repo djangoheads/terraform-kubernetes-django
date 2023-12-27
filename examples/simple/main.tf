@@ -13,8 +13,13 @@ module "migrate" {
 
   # Specific options
   image     = var.image
-  command = [ "echo" ]
-  args = [ "123" ]
+  env_vars = {
+    DJANGO_SECRET_KEY = "local",
+    DJANGO_DEBUG = "1",
+    DJANGO_DATABASES__default__NAME = "/tmp/db.sqlite3"
+  }
+  command = [ "django-admin" ]
+  args = [ "migrate", "--noinput" ]
   wait = false
 }
 
@@ -32,11 +37,16 @@ module "server" {
   }
   # Specific options
   image     = var.image
-  command = ["/bin/bash", "-c", "tail -f /dev/null"]
-  args = []
+  env_vars = {
+    DJANGO_SECRET_KEY = "local",
+    DJANGO_DEBUG = "1",
+    DJANGO_DATABASES__default__NAME = "/tmp/db.sqlite3"
+  }
+  command = ["/home/app/bin/entrypoint.sh"]
+  args = ["devserver"] 
   port = 8000
   target_port = 8000
-  wait = false
+  wait = true
 }
 
 module "ingress" {

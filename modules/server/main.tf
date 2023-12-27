@@ -17,29 +17,32 @@ resource "kubernetes_deployment" "server" {
         }
       }
       spec {
-       init_container {
-         name    = "init-container"
-         image   = var.image
-         command = ["sh", "-c"]
-         args    = var.init_command
-         dynamic "env" {
-            for_each = var.env_vars
-            content {
-              name  = env.key
-              value = env.value
+        dynamic "init_container" {
+          for_each = var.init_command
+          content {
+            name    = "init-container"
+          image   = var.image
+          command = ["sh", "-c"]
+          args    = var.init_command
+          dynamic "env" {
+              for_each = var.env_vars
+              content {
+                name  = env.key
+                value = env.value
+              }
+            }
+          volume_mount {
+              name       = "${var.name}-dynaconf-settings"
+              mount_path = var.settings_mount_path
+              read_only  = true
+            }
+            volume_mount {
+              name       = "${var.name}-dynaconf-secrets"
+              mount_path = var.secrets_mount_path 
+              read_only  = true
             }
           }
-        volume_mount {
-            name       = "${var.name}-dynaconf-settings"
-            mount_path = var.settings_mount_path
-            read_only  = true
-          }
-          volume_mount {
-            name       = "${var.name}-dynaconf-secrets"
-            mount_path = var.secrets_mount_path 
-            read_only  = true
-          }
-       }
+        }
         container {
           image   = var.image
           name    = "main"
@@ -82,7 +85,7 @@ resource "kubernetes_deployment" "server" {
   wait_for_rollout = var.wait
 
   depends_on = [
-    module.config,
+    module.dynaconf,
   ]
 }
 

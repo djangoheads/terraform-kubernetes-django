@@ -20,5 +20,5 @@ variable "secrets" {
 
 variable "image" {
   type = string
-  default = "ubuntu:latest"
+  default = "djangoheads/dummy:latest"
 }
