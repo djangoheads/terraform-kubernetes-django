@@ -47,6 +47,7 @@ jobs:
 
       - name: Test application
         run: |
+          sleep 30
           kubectl get pods -n default
           kubectl port-forward service/django-server 8000:8000 2>&1 >/dev/null &
           nc -v localhost 8000 2>&1 >/dev/null &
