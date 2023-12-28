@@ -49,9 +49,10 @@ jobs:
         run: |
           sleep 30
           kubectl get pods -n default
-          kubectl port-forward service/django-server 8000:8000 2>&1 >/dev/null &
-          nc -v localhost 8000 2>&1 >/dev/null &
+          kubectl port-forward service/django-server 8002:8000 2>&1 >/dev/null &
+          sleep 30
+          nc -v localhost 8002 2>&1 >/dev/null &
           echo $?
-          curl http://localhost:8000
+          curl http://localhost:8002
           echo $?
           
