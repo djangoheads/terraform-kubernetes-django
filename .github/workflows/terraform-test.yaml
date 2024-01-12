@@ -3,7 +3,7 @@ name: Infra test
 on:
   push:
     branches:
-      - sb/refactor/core-structure
+      - main
 
 jobs:
   release:
