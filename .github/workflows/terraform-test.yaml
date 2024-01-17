@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - sb/refactor/core-structure
 
 jobs:
   release:

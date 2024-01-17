@@ -3,13 +3,7 @@ resource "kubernetes_ingress_v1" "main_ingress" {
   metadata {
     name      = var.name
     namespace = var.namespace
-    annotations = {
-      "alb.ingress.kubernetes.io/scheme"                   = "internet-facing"
-      "kubernetes.io/ingress.class"                        = "alb"
-      "alb.ingress.kubernetes.io/listen-ports"             = "[{\"HTTPS\":443}]"
-      "alb.ingress.kubernetes.io/certificate-arn"          = var.aws.certificate
-      "alb.ingress.kubernetes.io/load-balancer-attributes" = "routing.http.preserve_host_header.enabled=true"
-    }
+    annotations = var.aws_annotation
   }
 
   spec {

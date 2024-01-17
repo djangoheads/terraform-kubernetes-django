@@ -44,4 +44,14 @@ variable "aws" {
   })
   default = null
 }
+variable "aws_annotation" {
+  type = map(string)
+  default = {
+    "alb.ingress.kubernetes.io/scheme"                   = "internet-facing"
+    "kubernetes.io/ingress.class"                        = "alb"
+    "alb.ingress.kubernetes.io/listen-ports"             = "[{\"HTTPS\":443}]"
+    "alb.ingress.kubernetes.io/certificate-arn"          = var.aws.certificate
+    "alb.ingress.kubernetes.io/load-balancer-attributes" = "routing.http.preserve_host_header.enabled=true"
+  }
+}
 
