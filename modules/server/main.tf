@@ -72,7 +72,7 @@ resource "kubernetes_deployment" "server" {
               path = var.liveness.path
               port = var.liveness.port
             }
-            initial_delay_seconds = var.leveness.delay
+            initial_delay_seconds = var.liveness.delay
             period_seconds        = 5
           }
           readiness_probe {
