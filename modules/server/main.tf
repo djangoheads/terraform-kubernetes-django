@@ -67,21 +67,33 @@ resource "kubernetes_deployment" "server" {
             mount_path = var.secrets_mount_path 
             read_only  = true
           }
-          liveness_probe {
-            http_get {
-              path = var.liveness.path
-              port = var.liveness.port
+          dynamic "readiness_probe" {
+            for_each = var.readiness
+            content {
+              dynamic "http_get" {
+                for_each = readiness_probe.value["http_get"]
+                content {
+                  path = http_get.value["path"]
+                  port = http_get.value["port"]
+                }
+              }
+              initial_delay_seconds = readiness_probe.value["delay"]
+              period_seconds        = readiness_probe.value["period_seconds"]
             }
-            initial_delay_seconds = var.liveness.delay
-            period_seconds        = 5
           }
-          readiness_probe {
-            http_get {
-              path = var.readiness.path
-              port = var.readiness.port
+          dynamic "liveness_probe" {
+            for_each = var.liveness
+            content {
+              dynamic "http_get" {
+                for_each = liveness_probe.value["http_get"]
+                content {
+                  path = http_get.value["path"]
+                  port = http_get.value["port"]
+                }
+              }
+              initial_delay_seconds = liveness_probe.value["delay"]
+              period_seconds        = liveness_probe.value["period_seconds"]
             }
-            initial_delay_seconds = var.readiness.delay
-            period_seconds        = 5
           }
         }
         volume {

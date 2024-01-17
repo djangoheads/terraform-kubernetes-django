@@ -89,29 +89,24 @@ variable "image_pull_policy" {
 }
 
 variable "readiness" {
-  type = object({
+  type = list(object({
     delay = number
-    port  = number
-    path  = string
-  })
-  default = {
-    delay = 10
-    port  = 8000
-    path  = "/health-check"
-  }
-  description = "Readiness rules for Server"
+    period_seconds = number
+    http_get = list(object({
+      path    = string
+      port    = number
+    }))
+  }))
+  default = []
 }
-
 variable "liveness" {
-  type = object({
+  type = list(object({
     delay = number
-    port  = number
-    path  = string
-  })
-  default = {
-    delay = 60
-    port  = 8000
-    path  = "/health-check"
-  }
-  description = "Liveness rules for Server"
+    period_seconds = number
+    http_get = list(object({
+      path    = string
+      port    = number
+    }))
+  }))
+  default = []
 }
