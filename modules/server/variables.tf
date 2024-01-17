@@ -88,30 +88,30 @@ variable "image_pull_policy" {
   description = "Image pull policy"
 }
 
-# variable "readiness" {
-#   type = object({
-#     delay = number
-#     port  = number
-#     path  = string
-#   })
-#   default = {
-#     delay = 10
-#     port  = 8000
-#     path  = "/health-check"
-#   }
-#   description = "Readiness rules for Server"
-# }
+variable "readiness" {
+  type = object({
+    delay = number
+    port  = number
+    path  = string
+  })
+  default = {
+    delay = 10
+    port  = 8000
+    path  = "/health-check"
+  }
+  description = "Readiness rules for Server"
+}
 
-# variable "liveness" {
-#   type = object({
-#     delay = number
-#     port  = number
-#     path  = string
-#   })
-#   default = {
-#     delay = 60
-#     port  = 8000
-#     path  = "/health-check"
-#   }
-#   description = "Liveness rules for Server"
-# }
+variable "liveness" {
+  type = object({
+    delay = number
+    port  = number
+    path  = string
+  })
+  default = {
+    delay = 60
+    port  = 8000
+    path  = "/health-check"
+  }
+  description = "Liveness rules for Server"
+}

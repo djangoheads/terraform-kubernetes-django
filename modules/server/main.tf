@@ -67,6 +67,22 @@ resource "kubernetes_deployment" "server" {
             mount_path = var.secrets_mount_path 
             read_only  = true
           }
+          liveness_probe {
+            http_get {
+              path = var.liveness.path
+              port = var.liveness.port
+            }
+            initial_delay_seconds = var.leveness.delay
+            period_seconds        = 5
+          }
+          readiness_probe {
+            http_get {
+              path = var.readiness.path
+              port = var.readiness.port
+            }
+            initial_delay_seconds = var.readiness.delay
+            period_seconds        = 5
+          }
         }
         volume {
           name = "${var.name}-dynaconf-settings" 
@@ -91,21 +107,21 @@ resource "kubernetes_deployment" "server" {
   ]
 }
 
-# resource "kubernetes_horizontal_pod_autoscaler" "autoscaler" {
-#   metadata {
-#     name = var.name
-#   }
+resource "kubernetes_horizontal_pod_autoscaler" "autoscaler" {
+  metadata {
+    name = var.name
+  }
 
-#   spec {
-#     min_replicas = var.replicas.min
-#     max_replicas = var.replicas.max
+  spec {
+    min_replicas = var.replicas.min
+    max_replicas = var.replicas.max
 
-#     scale_target_ref {
-#       kind = "Deployment"
-#       name = var.name
-#     }
-#   }
-# }
+    scale_target_ref {
+      kind = "Deployment"
+      name = var.name
+    }
+  }
+}
 
 
 resource "kubernetes_service" "server" {

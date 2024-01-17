@@ -29,12 +29,6 @@ variable "command" {
   description = "Override command"
 }
 
-variable "init_command" {
-  type        = list(string)
-  default     = []
-  description = "Override command"
-}
-
 variable "args" {
   type        = list(string)
   default     = []
@@ -68,6 +62,30 @@ variable "target_port" {
   type        = number
   default     = 8000
   description = "Port to expose"
+}
+variable "env_vars" {
+  description = "Environment variables for the storage module"
+  type        = map(string)
+  default     = {}
+}
+variable "init_command" {
+  type        = list(string)
+  default     = []
+  description = "Override command"
+}
+variable "settings_mount_path" {
+  type = string
+  default = "/var/etc/config"
+}
+variable "secrets_mount_path" {
+  type = string
+  default = "/var/etc/secrets"
+}
+
+variable "image_pull_policy" {
+  type        = string
+  default     = "IfNotPresent"
+  description = "Image pull policy"
 }
 
 variable "readiness" {

@@ -17,24 +17,57 @@ resource "kubernetes_deployment" "server" {
         }
       }
       spec {
-#        init_container {
-#          name    = "init-container"
-#          image   = var.image
-#          command = ["sh", "-c"]
-#          args    = var.init_command
-#          dynamic "env" {
-#            for_each = var.environment
-#            content {
-#              name  = env.key
-#              value = env.value
-#            }
-#          }
-#        }
         container {
           image   = var.image
           name    = "main"
           command = var.command
           args    = var.args
+          image_pull_policy = var.image_pull_policy
+          dynamic "env" {
+            for_each = var.env_vars
+            content {
+              name  = env.key
+              value = env.value
+            }
+          }
+          volume_mount {
+            name       = "${var.name}-dynaconf-settings"
+            mount_path = var.settings_mount_path
+            read_only  = true
+          }
+          volume_mount {
+            name       = "${var.name}-dynaconf-secrets"
+            mount_path = var.secrets_mount_path 
+            read_only  = true
+          }
+          liveness_probe {
+            http_get {
+              path = var.liveness.path
+              port = var.liveness.port
+            }
+            initial_delay_seconds = var.leveness.delay
+            period_seconds        = 5
+          }
+          readiness_probe {
+            http_get {
+              path = var.readiness.path
+              port = var.readiness.port
+            }
+            initial_delay_seconds = var.readiness.delay
+            period_seconds        = 5
+          }
+        }
+        volume {
+          name = "${var.name}-dynaconf-settings" 
+          config_map {
+            name = "${var.name}-dynaconf"
+          }
+        }
+        volume {
+          name = "${var.name}-dynaconf-secrets"
+          secret {
+            secret_name = "${var.name}-dynaconf"
+          }
         }
       }
     }
@@ -47,37 +80,19 @@ resource "kubernetes_deployment" "server" {
   ]
 }
 
-# resource "kubernetes_horizontal_pod_autoscaler" "autoscaler" {
-#   metadata {
-#     name = var.name
-#   }
-
-#   spec {
-#     min_replicas = var.replicas.min
-#     max_replicas = var.replicas.max
-
-#     scale_target_ref {
-#       kind = "Deployment"
-#       name = var.name
-#     }
-#   }
-# }
-
-
-resource "kubernetes_service" "server" {
+resource "kubernetes_horizontal_pod_autoscaler" "autoscaler" {
   metadata {
-    name      = var.name
-    namespace = var.namespace
+    name = var.name
   }
+
   spec {
-    selector = {
-      app = var.name
-    }
-    port {
-      name        = "main"
-      protocol    = "TCP"
-      port        = var.port
-      target_port = var.target_port
+    min_replicas = var.replicas.min
+    max_replicas = var.replicas.max
+
+    scale_target_ref {
+      kind = "Deployment"
+      name = var.name
     }
   }
 }
+
