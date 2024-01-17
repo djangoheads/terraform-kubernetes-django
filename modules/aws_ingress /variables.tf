@@ -6,10 +6,6 @@ variable "name" {
     type = string
 }
 
-variable "cloud" {
-    type = string
-}
-
 # Ingress Specific Variables
 
 variable "rules" {

@@ -52,8 +52,7 @@ module "server" {
 module "ingress" {
   # Main options 
   # source = "github.com/djangoheads/terraform-kubernetes-django"
-  source = "../../modules/ingress"
-  cloud   = "none"
+  source = "../../modules/default_ingress"
 
   # Common options
   namespace = var.namespace

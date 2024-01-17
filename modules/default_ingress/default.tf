@@ -1,9 +1,7 @@
-resource "kubernetes_ingress_v1" "main_ingress" {
-  count       = var.cloud == "aws" ? 1 : 0
+resource "kubernetes_ingress_v1" "main" {
   metadata {
     name      = var.name
     namespace = var.namespace
-    annotations = var.aws_annotation
   }
 
   spec {
