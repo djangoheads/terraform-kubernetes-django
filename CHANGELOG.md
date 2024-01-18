@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5.0](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.4.1...v1.5.0) (2024-01-18)
+
+
+### Features
+
+* refactored structure ([42258ee](https://github.com/djangoheads/terraform-kubernetes-django/commit/42258ee641b06da134348bd954c9b474df2c9d55))
+
 ### [1.4.1](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.4.0...v1.4.1) (2023-12-07)
 
 
