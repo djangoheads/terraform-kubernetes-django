@@ -1,5 +1,3 @@
-
-
 module "dynaconf" {
   source = "../dynaconf"
 
