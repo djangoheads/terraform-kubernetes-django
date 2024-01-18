@@ -1,58 +1,66 @@
 module "migrate" {
   # Main options 
-  # source = "github.com/djangoheads/terraform-kubernetes-django"
-  source = "../../"
-  role   = "command"
+  # source = "github.com/djangoheads/terraform-kubernetes-django/modules/command?ref=v0.1.0"
+  source = "../../modules/command"
 
-  # Common options
-  namespace = local.namespace
-  image     = local.image
-  config    = yamlencode(merge(yamldecode(local.config), { "ANOTHER" : "VALUE" }))
-  secrets   = local.secrets
+  namespace = var.namespace
+  name    = "${var.name}-migrate"
+
+  dynaconf  = {
+    settings  = local.settings
+    secrets = local.secrets
+  }
 
   # Specific options
-  name    = "${local.name}-migrate"
-  command = ["migrate"]
+  image     = var.image
+  env_vars = {
+    DJANGO_SECRET_KEY = "local",
+    DJANGO_DEBUG = "1",
+    DJANGO_DATABASES__default__NAME = "/tmp/db.sqlite3"
+  }
+  command = [ "django-admin" ]
+  args = [ "migrate", "--noinput" ]
+  wait = false
 }
 
 module "server" {
   # Main options 
-  # source = "github.com/djangoheads/terraform-kubernetes-django"
-  source = "../../"
-  role   = "server"
+  # source = "github.com/djangoheads/terraform-kubernetes-django/modules/server?ref=v0.1.0"
+  source = "../../modules/server"
 
-  # Common options
-  namespace = local.namespace
-  image     = local.image
-  config    = local.config
-  secrets   = local.secrets
+  namespace = var.namespace
+  name    = "${var.name}-server"
 
+  dynaconf  = {
+    settings  = local.settings
+    secrets = local.secrets
+  }
   # Specific options
-  name = "${local.name}-server"
-
-  depends_on = [
-    module.migrate
-  ]
+  image     = var.image
+  env_vars = {
+    DJANGO_SECRET_KEY = "local",
+    DJANGO_DEBUG = "1",
+    DJANGO_DATABASES__default__NAME = "/tmp/db.sqlite3"
+  }
+  command = ["/home/app/bin/entrypoint.sh"]
+  args = ["devserver"] 
+  port = 8000
+  target_port = 8000
+  wait = true
 }
 
 module "ingress" {
   # Main options 
   # source = "github.com/djangoheads/terraform-kubernetes-django"
-  source = "../../"
-  role   = "ingress"
+  source = "../../modules/default_ingress"
 
   # Common options
-  namespace = local.namespace
-
-  # NOTE: NOT USED, TODO: REFACTOR, BUT REQUIRED TO PUT HERE
-  image   = local.image
-  config  = local.config
-  secrets = local.secrets
+  namespace = var.namespace
+  name = "${var.name}-main"
 
   # Specific options
-  name = "${local.name}-ingress"
 
-  ingress = [{
+  rules = [{
     host = "admin.somedomain.com"
     paths = [{
       path = "/admin/"
@@ -62,8 +70,4 @@ module "ingress" {
       }
     }]
   }]
-
-  depends_on = [
-    module.migrate
-  ]
 }

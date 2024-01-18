@@ -1,5 +1,4 @@
 resource "kubernetes_ingress_v1" "main" {
-  count = var.role == "ingress" ? 1 : 0
   metadata {
     name      = var.name
     namespace = var.namespace
@@ -7,7 +6,7 @@ resource "kubernetes_ingress_v1" "main" {
 
   spec {
     dynamic "rule" {
-      for_each = var.ingress
+      for_each = var.rules
       content {
         host = rule.value["host"]
         http {

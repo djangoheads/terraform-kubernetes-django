@@ -1,0 +1,58 @@
+name: Infra test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: start minikube
+        id: minikube
+        uses: medyagh/setup-minikube@master
+      
+      - name: Install cookiecutter
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cookiecutter
+
+      - name: Install terraform
+        uses: hashicorp/setup-terraform@v1
+      
+      - name: cookiecutter dummy
+        run: |
+          cookiecutter --no-input https://github.com/djangoheads/django-template/
+
+      - name: docker build
+        run: |
+          cd dummy/
+          docker build -t djangoheads/dummy:latest .
+      
+      - name: Load image to minikube
+        run: |
+          eval $(minikube docker-env)
+          minikube image load djangoheads/dummy:latest
+
+      - name: terraform init and apply
+        run: |
+          cd examples/simple/
+          terraform init -upgrade
+          terraform apply -auto-approve
+
+      - name: Test application
+        run: |
+          sleep 30
+          kubectl get pods -n default
+          kubectl port-forward service/django-server 8002:8000 2>&1 >/dev/null &
+          sleep 30
+          nc -v localhost 8002 2>&1 >/dev/null &
+          echo $?
+          curl http://localhost:8002
+          echo $?
+          
