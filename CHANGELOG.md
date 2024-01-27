@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.5.2](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.5.1...v1.5.2) (2024-01-27)
+
+
+### Bug Fixes
+
+* probes variables ([09927cc](https://github.com/djangoheads/terraform-kubernetes-django/commit/09927ccbd78d5af61a30105bbf0f30705a9b7d88))
+
 ### [1.5.1](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.5.0...v1.5.1) (2024-01-27)
 
 
