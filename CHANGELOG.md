@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.5.1](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.5.0...v1.5.1) (2024-01-27)
+
+
+### Bug Fixes
+
+* autoscaler optional setup, extend probes values ([f28121f](https://github.com/djangoheads/terraform-kubernetes-django/commit/f28121f08fbd33a3528f690afe661c943ef7a5fd))
+
 ## [1.5.0](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.4.1...v1.5.0) (2024-01-18)
 
 
