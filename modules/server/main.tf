@@ -4,7 +4,7 @@ resource "kubernetes_deployment" "server" {
     namespace = var.namespace
   }
   spec {
-    replicas = var.replicas.min
+    replicas = var.enable_autoscaler ? null : var.replica_count
     selector {
       match_labels = {
         service = var.name
@@ -20,35 +20,35 @@ resource "kubernetes_deployment" "server" {
         dynamic "init_container" {
           for_each = var.init_command
           content {
-            name    = "init-container"
-          image   = var.image
-          command = ["sh", "-c"]
-          args    = var.init_command
-          image_pull_policy = var.image_pull_policy
-          dynamic "env" {
+            name              = "init-container"
+            image             = var.image
+            command           = ["sh", "-c"]
+            args              = var.init_command
+            image_pull_policy = var.image_pull_policy
+            dynamic "env" {
               for_each = var.env_vars
               content {
                 name  = env.key
                 value = env.value
               }
             }
-          volume_mount {
+            volume_mount {
               name       = "${var.name}-dynaconf-settings"
               mount_path = var.settings_mount_path
               read_only  = true
             }
             volume_mount {
               name       = "${var.name}-dynaconf-secrets"
-              mount_path = var.secrets_mount_path 
+              mount_path = var.secrets_mount_path
               read_only  = true
             }
           }
         }
         container {
-          image   = var.image
-          name    = "main"
-          command = var.command
-          args    = var.args
+          image             = var.image
+          name              = "main"
+          command           = var.command
+          args              = var.args
           image_pull_policy = var.image_pull_policy
           dynamic "env" {
             for_each = var.env_vars
@@ -64,7 +64,7 @@ resource "kubernetes_deployment" "server" {
           }
           volume_mount {
             name       = "${var.name}-dynaconf-secrets"
-            mount_path = var.secrets_mount_path 
+            mount_path = var.secrets_mount_path
             read_only  = true
           }
           dynamic "readiness_probe" {
@@ -77,8 +77,11 @@ resource "kubernetes_deployment" "server" {
                   port = http_get.value["port"]
                 }
               }
-              initial_delay_seconds = readiness_probe.value["delay"]
+              initial_delay_seconds = readiness_probe.value["initial_delay_seconds"]
               period_seconds        = readiness_probe.value["period_seconds"]
+              timeout_seconds       = readiness_probe.value["timeout_seconds"]
+              failure_threshold     = readiness_probe.value["failure_threshold"]
+              success_threshold     = readiness_probe.value["success_threshold"]
             }
           }
           dynamic "liveness_probe" {
@@ -91,13 +94,16 @@ resource "kubernetes_deployment" "server" {
                   port = http_get.value["port"]
                 }
               }
-              initial_delay_seconds = liveness_probe.value["delay"]
+              initial_delay_seconds = liveness_probe.value["initial_delay_seconds"]
               period_seconds        = liveness_probe.value["period_seconds"]
+              timeout_seconds       = liveness_probe.value["timeout_seconds"]
+              failure_threshold     = liveness_probe.value["failure_threshold"]
+              success_threshold     = liveness_probe.value["success_threshold"]
             }
           }
         }
         volume {
-          name = "${var.name}-dynaconf-settings" 
+          name = "${var.name}-dynaconf-settings"
           config_map {
             name = "${var.name}-dynaconf"
           }
@@ -120,17 +126,22 @@ resource "kubernetes_deployment" "server" {
 }
 
 resource "kubernetes_horizontal_pod_autoscaler" "autoscaler" {
+  count = var.enable_autoscaler ? 1 : 0
   metadata {
-    name = var.name
+    name      = var.name
+    namespace = var.namespace
   }
 
   spec {
+    target_cpu_utilization_percentage = var.cpu_target
+
     min_replicas = var.replicas.min
     max_replicas = var.replicas.max
 
     scale_target_ref {
-      kind = "Deployment"
-      name = var.name
+      api_version = "apps/v1"
+      kind        = "Deployment"
+      name        = var.name
     }
   }
 }

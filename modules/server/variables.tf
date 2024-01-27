@@ -41,6 +41,12 @@ variable "wait" {
   description = "Perform waiting resource to be available and run"
 }
 
+variable "replica_count" {
+  type        = number
+  default     = 1
+  description = "Number of replicas"
+}
+
 variable "replicas" {
   type = object({
     min = number
@@ -109,4 +115,16 @@ variable "liveness" {
     }))
   }))
   default = []
+}
+
+variable "enable_autoscaler" {
+  description = "Boolean flag to enable/disable kubernetes horizontal pod autoscaler"
+  type        = bool
+  default     = false
+}
+
+variable "cpu_target" {
+  description = "Target CPU utilization percentage"
+  type        = number
+  default     = 110
 }
