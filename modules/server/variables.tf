@@ -96,23 +96,30 @@ variable "image_pull_policy" {
 
 variable "readiness" {
   type = list(object({
-    delay = number
-    period_seconds = number
-    http_get = list(object({
-      path    = string
-      port    = number
-    }))
+    initial_delay_seconds = optional(number)
+    period_seconds = optional(number)
+    timeout_seconds = optional(number)
+    failure_threshold = optional(number)
+    success_threshold = optional(number)
+    http_get = optional(list(object({
+      path    = optional(string)
+      port    = optional(number)
+    })))
   }))
   default = []
 }
+
 variable "liveness" {
   type = list(object({
-    delay = number
-    period_seconds = number
-    http_get = list(object({
-      path    = string
-      port    = number
-    }))
+    initial_delay_seconds = optional(number)
+    period_seconds = optional(number)
+    timeout_seconds = optional(number)
+    failure_threshold = optional(number)
+    success_threshold = optional(number)
+    http_get = optional(list(object({
+      path    = optional(string)
+      port    = optional(number)
+    })))
   }))
   default = []
 }
