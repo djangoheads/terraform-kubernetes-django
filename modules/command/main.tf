@@ -5,7 +5,7 @@ resource "kubernetes_job" "command" {
   }
   spec {
     ttl_seconds_after_finished = 100
-    backoff_limit = 5
+    backoff_limit              = 5
     template {
       metadata {
         labels = {
@@ -14,10 +14,10 @@ resource "kubernetes_job" "command" {
       }
       spec {
         container {
-          name    = "main"
-          image   = var.image
-          command = var.command
-          args    = var.args
+          name              = "main"
+          image             = var.image
+          command           = var.command
+          args              = var.args
           image_pull_policy = var.image_pull_policy
           dynamic "env" {
             for_each = var.env_vars
@@ -31,29 +31,43 @@ resource "kubernetes_job" "command" {
           volume_mount {
             name       = "${var.name}-dynaconf-settings"
             mount_path = var.settings_mount_path
+            sub_path   = var.configmap_path
             read_only  = true
           }
           volume_mount {
-            name       = "${var.name}-dynaconf-secrets"
-            mount_path = var.secrets_mount_path 
+            name       = "${var.name}-dynaconf-settings"
+            mount_path = var.secrets_mount_path
+            sub_path   = var.secret_path
             read_only  = true
           }
         }
         restart_policy = "Never"
 
-        # Volumes 
+        # Volumes
         volume {
-          name = "${var.name}-dynaconf-settings" 
-          config_map {
-            name = "${var.name}-dynaconf"
+          name = "${var.name}-dynaconf-settings"
+          projected {
+            sources {
+              config_map {
+                optional = true
+                name = var.configmap_name
+                items {
+                  key  = var.configmap_key
+                  path = var.configmap_path
+                }
+              }
+              secret {
+                optional = true
+                name = var.secret_name
+                items {
+                  key  = var.secret_key
+                  path = var.secret_path
+                }
+              }
+            }
           }
         }
-        volume {
-          name = "${var.name}-dynaconf-secrets" 
-          secret {
-            secret_name = "${var.name}-dynaconf"
-          }
-        }
+
 
       }
     }

@@ -1,22 +1,14 @@
 # Common variables
 
 variable "namespace" {
-    type = string
+  type = string
 }
 
 variable "name" {
-    type = string
-}
-
-variable "dynaconf" {
-  type = object({
-    settings = string
-    secrets = string
-  })
+  type = string
 }
 
 # Server specific variables
-
 variable "image" {
   type        = string
   description = "image"
@@ -79,12 +71,26 @@ variable "init_command" {
   default     = []
   description = "Override command"
 }
+
+variable "configmap_name" {
+  type        = string
+  description = "Configmap name"
+  default     = null
+}
+
+variable "secret_name" {
+  type        = string
+  description = "Secret name"
+  default     = null
+}
+
 variable "settings_mount_path" {
-  type = string
+  type    = string
   default = "/var/etc/config"
 }
+
 variable "secrets_mount_path" {
-  type = string
+  type    = string
   default = "/var/etc/secrets"
 }
 
@@ -97,13 +103,13 @@ variable "image_pull_policy" {
 variable "readiness" {
   type = list(object({
     initial_delay_seconds = optional(number)
-    period_seconds = optional(number)
-    timeout_seconds = optional(number)
-    failure_threshold = optional(number)
-    success_threshold = optional(number)
-    http_get = optional(list(object({
-      path    = optional(string)
-      port    = optional(number)
+    period_seconds        = optional(number)
+    timeout_seconds       = optional(number)
+    failure_threshold     = optional(number)
+    success_threshold     = optional(number)
+    http_get              = optional(list(object({
+      path = optional(string)
+      port = optional(number)
     })))
   }))
   default = []
@@ -112,13 +118,13 @@ variable "readiness" {
 variable "liveness" {
   type = list(object({
     initial_delay_seconds = optional(number)
-    period_seconds = optional(number)
-    timeout_seconds = optional(number)
-    failure_threshold = optional(number)
-    success_threshold = optional(number)
-    http_get = optional(list(object({
-      path    = optional(string)
-      port    = optional(number)
+    period_seconds        = optional(number)
+    timeout_seconds       = optional(number)
+    failure_threshold     = optional(number)
+    success_threshold     = optional(number)
+    http_get              = optional(list(object({
+      path = optional(string)
+      port = optional(number)
     })))
   }))
   default = []
@@ -134,4 +140,28 @@ variable "cpu_target" {
   description = "Target CPU utilization percentage"
   type        = number
   default     = 110
+}
+
+variable "configmap_key" {
+  type = string
+  default = null
+  description = "The key of the configmap to be used as the configuration for the application"
+}
+
+variable "configmap_path" {
+  type = string
+  default = null
+  description = "The path where the configmap will be mounted"
+}
+
+variable "secret_key" {
+  type = string
+  default = null
+  description = "The key of the secret to be used as the configuration for the application"
+}
+
+variable "secret_path" {
+  type = string
+  default = null
+  description = "The path where the secret will be mounted"
 }

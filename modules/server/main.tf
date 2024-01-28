@@ -5,6 +5,11 @@ resource "kubernetes_deployment" "server" {
   }
   spec {
     replicas = var.enable_autoscaler ? null : var.replica_count
+    strategy {
+      rolling_update {
+        max_surge = 1
+      }
+    }
     selector {
       match_labels = {
         service = var.name
@@ -35,11 +40,13 @@ resource "kubernetes_deployment" "server" {
             volume_mount {
               name       = "${var.name}-dynaconf-settings"
               mount_path = var.settings_mount_path
+              sub_path   = var.configmap_path
               read_only  = true
             }
             volume_mount {
-              name       = "${var.name}-dynaconf-secrets"
+              name       = "${var.name}-dynaconf-settings"
               mount_path = var.secrets_mount_path
+              sub_path   = var.secret_path
               read_only  = true
             }
           }
@@ -60,11 +67,13 @@ resource "kubernetes_deployment" "server" {
           volume_mount {
             name       = "${var.name}-dynaconf-settings"
             mount_path = var.settings_mount_path
+            sub_path   = var.configmap_path
             read_only  = true
           }
           volume_mount {
-            name       = "${var.name}-dynaconf-secrets"
+            name       = "${var.name}-dynaconf-settings"
             mount_path = var.secrets_mount_path
+            sub_path   = var.secret_path
             read_only  = true
           }
           dynamic "readiness_probe" {
@@ -104,14 +113,25 @@ resource "kubernetes_deployment" "server" {
         }
         volume {
           name = "${var.name}-dynaconf-settings"
-          config_map {
-            name = "${var.name}-dynaconf"
-          }
-        }
-        volume {
-          name = "${var.name}-dynaconf-secrets"
-          secret {
-            secret_name = "${var.name}-dynaconf"
+          projected {
+            sources {
+              config_map {
+                name = var.configmap_name
+                optional = true
+                items {
+                  key  = var.configmap_key
+                  path = var.configmap_path
+                }
+              }
+              secret {
+                name = var.secret_name
+                optional = true
+                items {
+                  key  = var.secret_key
+                  path = var.secret_path
+                }
+              }
+            }
           }
         }
       }
@@ -120,9 +140,6 @@ resource "kubernetes_deployment" "server" {
 
   wait_for_rollout = var.wait
 
-  depends_on = [
-    module.dynaconf,
-  ]
 }
 
 resource "kubernetes_horizontal_pod_autoscaler" "autoscaler" {

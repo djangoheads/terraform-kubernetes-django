@@ -7,7 +7,7 @@ resource "kubernetes_config_map" "dynaconf" {
   }
 
   data = {
-    "settings.yaml" = var.dynaconf.settings
+    "override.yaml" = var.dynaconf.settings
   }
 }
 
