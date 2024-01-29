@@ -4,7 +4,6 @@ resource "kubernetes_deployment" "server" {
     namespace = var.namespace
   }
   spec {
-    replicas = var.replicas.min
     selector {
       match_labels = {
         service = var.name
@@ -129,10 +128,34 @@ resource "kubernetes_horizontal_pod_autoscaler" "autoscaler" {
     max_replicas = var.replicas.max
 
     scale_target_ref {
+      api_version = "apps/v1"
       kind = "Deployment"
       name = var.name
     }
+    # metric {
+		# 	type = "Resource"
+		# 	resource {
+		# 		name = "cpu"
+		# 		target {
+		# 			type = "Utilization"
+		# 			average_utilization = 60
+		# 		}
+		# 	}
+		# }
+    # metric {
+		# 	type = "Resource"
+		# 	resource {
+		# 		name = "memory"
+		# 		target {
+		# 			type = "Utilization"
+		# 			average_utilization = 60
+		# 		}
+		# 	}
+		# }
   }
+  depends_on = [
+    kubernetes_deployment.server
+  ]
 }
 
 

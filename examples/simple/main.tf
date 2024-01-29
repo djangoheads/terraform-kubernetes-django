@@ -47,6 +47,10 @@ module "server" {
   port = 8000
   target_port = 8000
   wait = true
+  replicas = {
+    min = 2
+    max = 5
+  }
 }
 
 module "ingress" {
