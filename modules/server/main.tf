@@ -59,7 +59,7 @@ resource "kubernetes_deployment" "server" {
           image_pull_policy = var.image_pull_policy
 
           port {
-            container_port = var.port
+            container_port = var.container_port
           }
           dynamic "env" {
             for_each = var.env_vars
@@ -180,8 +180,8 @@ resource "kubernetes_service" "server" {
     port {
       name        = "main"
       protocol    = "TCP"
-      port        = var.port
-      target_port = var.target_port
+      port        = var.service_port
+      target_port = var.service_target_port
     }
   }
 }

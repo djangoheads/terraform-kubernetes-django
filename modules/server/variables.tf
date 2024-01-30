@@ -51,12 +51,19 @@ variable "replicas" {
   description = "Define scalability options"
 }
 
-variable "port" {
+variable "container_port" {
   type        = number
   default     = 8000
   description = "Port to expose"
 }
-variable "target_port" {
+
+variable "service_port" {
+  type        = number
+  default     = 8000
+  description = "Port to expose"
+}
+
+variable "service_target_port" {
   type        = number
   default     = 8000
   description = "Port to expose"
