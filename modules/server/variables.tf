@@ -53,21 +53,22 @@ variable "replicas" {
 
 variable "container_port" {
   type        = number
-  default     = 8000
-  description = "Port to expose"
+  default     = 3000
+  description = "container port to expose"
 }
 
 variable "service_port" {
   type        = number
-  default     = 8000
-  description = "Port to expose"
+  default     = 3000
+  description = "service port to expose"
 }
 
 variable "service_target_port" {
   type        = number
-  default     = 8000
-  description = "Port to expose"
+  default     = 3000
+  description = "targeting service to container port"
 }
+
 variable "env_vars" {
   description = "Environment variables for the storage module"
   type        = map(string)
