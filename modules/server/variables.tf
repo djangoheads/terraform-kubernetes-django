@@ -53,19 +53,19 @@ variable "replicas" {
 
 variable "container_port" {
   type        = number
-  default     = 3000
+  default     = 8000
   description = "container port to expose"
 }
 
 variable "service_port" {
   type        = number
-  default     = 3000
+  default     = 8000
   description = "service port to expose"
 }
 
 variable "service_target_port" {
   type        = number
-  default     = 3000
+  default     = 8000
   description = "targeting service to container port"
 }
 
