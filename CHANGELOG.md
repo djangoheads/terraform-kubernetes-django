@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.6.2](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.6.1...v1.6.2) (2024-01-30)
+
+
+### Bug Fixes
+
+* deployment & service port naming ([d893e69](https://github.com/djangoheads/terraform-kubernetes-django/commit/d893e6920ef41eb68404fdb28b53a7976d8a6c44))
+
 ### [1.6.1](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.6.0...v1.6.1) (2024-01-30)
 
 
