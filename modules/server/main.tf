@@ -57,6 +57,10 @@ resource "kubernetes_deployment" "server" {
           command           = var.command
           args              = var.args
           image_pull_policy = var.image_pull_policy
+
+          port {
+            container_port = var.port
+          }
           dynamic "env" {
             for_each = var.env_vars
             content {
