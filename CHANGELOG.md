@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.6.5](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.6.4...v1.6.5) (2024-01-31)
+
+
+### Bug Fixes
+
+* remove whitespace from the aws_ingress module folder name ([2ecfea8](https://github.com/djangoheads/terraform-kubernetes-django/commit/2ecfea8a16d6e5856a9aba29d0aeec9d2d9b909a))
+
 ### [1.6.4](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.6.3...v1.6.4) (2024-01-30)
 
 
