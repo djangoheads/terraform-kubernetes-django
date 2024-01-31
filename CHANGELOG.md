@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.6.7](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.6.6...v1.6.7) (2024-01-31)
+
+
+### Bug Fixes
+
+* ingress endpoint output added ([da7d1ad](https://github.com/djangoheads/terraform-kubernetes-django/commit/da7d1ad2d5203c06e88e9dc63fa6b0900d0027dc))
+
 ### [1.6.6](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.6.5...v1.6.6) (2024-01-31)
 
 
