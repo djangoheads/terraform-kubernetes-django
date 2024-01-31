@@ -183,5 +183,6 @@ resource "kubernetes_service" "server" {
       port        = var.service_port
       target_port = var.service_target_port
     }
+    type = "NodePort"
   }
 }
