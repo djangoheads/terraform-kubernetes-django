@@ -26,7 +26,7 @@ resource "kubernetes_deployment" "server" {
           for_each = var.init_command
           content {
             name              = "init-container"
-            image             = var.image
+            image             = var.init_image
             command           = ["sh", "-c"]
             args              = var.init_command
             image_pull_policy = var.image_pull_policy

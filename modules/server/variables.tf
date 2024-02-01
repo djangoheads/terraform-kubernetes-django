@@ -15,6 +15,12 @@ variable "image" {
   default     = ""
 }
 
+variable "init_image" {
+  type        = string
+  description = "init container image"
+  default     = ""
+}
+
 variable "command" {
   type        = list(string)
   default     = []
