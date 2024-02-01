@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.6.9](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.6.8...v1.6.9) (2024-02-01)
+
+
+### Bug Fixes
+
+* added init image variable ([c56381b](https://github.com/djangoheads/terraform-kubernetes-django/commit/c56381b9fccf452fe920758bc0484ed3cea3727f))
+
 ### [1.6.8](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.6.7...v1.6.8) (2024-01-31)
 
 
