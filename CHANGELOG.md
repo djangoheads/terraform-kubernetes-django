@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.6.10](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.6.9...v1.6.10) (2024-02-06)
+
+
+### Bug Fixes
+
+* added working dir variables ([2fc0e4a](https://github.com/djangoheads/terraform-kubernetes-django/commit/2fc0e4acd208bd4a1fa1ce32533bd20421ce8a73))
+
 ### [1.6.9](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.6.8...v1.6.9) (2024-02-01)
 
 
