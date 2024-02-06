@@ -30,6 +30,7 @@ resource "kubernetes_deployment" "server" {
             command           = ["sh", "-c"]
             args              = var.init_command
             image_pull_policy = var.image_pull_policy
+            working_dir = var.init_working_dir
             dynamic "env" {
               for_each = var.env_vars
               content {
@@ -57,7 +58,7 @@ resource "kubernetes_deployment" "server" {
           command           = var.command
           args              = var.args
           image_pull_policy = var.image_pull_policy
-
+          working_dir = var.working_dir
           port {
             container_port = var.container_port
           }

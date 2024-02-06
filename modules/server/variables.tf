@@ -179,3 +179,15 @@ variable "secret_path" {
   default = null
   description = "The path where the secret will be mounted"
 }
+
+variable "init_working_dir" {
+  type = string
+  default = "/home/app/libs"
+  description = "The working directory for the init container"
+}
+
+variable "working_dir" {
+  type = string
+  default = "/home/app/libs"
+  description = "The working directory for the container"
+}
