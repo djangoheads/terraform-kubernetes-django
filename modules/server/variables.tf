@@ -39,12 +39,6 @@ variable "wait" {
   description = "Perform waiting resource to be available and run"
 }
 
-variable "replica_count" {
-  type        = number
-  default     = 1
-  description = "Number of replicas"
-}
-
 variable "replicas" {
   type = object({
     min = number
@@ -82,7 +76,7 @@ variable "env_vars" {
 }
 variable "init_command" {
   type        = list(string)
-  default     = []
+  default     = ["for i in {1..100}; do sleep 1; if django-admin migrate --check; then exit 0; fi; done; exit 1"]
   description = "Override command"
 }
 
@@ -100,12 +94,12 @@ variable "secret_name" {
 
 variable "settings_mount_path" {
   type    = string
-  default = "/var/etc/config"
+  default = "/home/app/config/override.yaml"
 }
 
 variable "secrets_mount_path" {
   type    = string
-  default = "/var/etc/secrets"
+  default = "/home/app/config/.secrets.yaml"
 }
 
 variable "image_pull_policy" {
@@ -126,7 +120,21 @@ variable "readiness" {
       port = optional(number)
     })))
   }))
-  default = []
+  default = [
+    {
+      http_get = [
+        {
+          path = "/healthcheck"
+          port = 8000
+        }
+      ]
+      initial_delay_seconds = 30
+      period_seconds        = 10
+      timeout_seconds       = 5
+      failure_threshold     = 6
+      success_threshold     = 1
+    }
+  ]
 }
 
 variable "liveness" {
@@ -150,6 +158,12 @@ variable "enable_autoscaler" {
   default     = false
 }
 
+variable "replica_count" {
+  type        = number
+  default     = 3
+  description = "Number of replicas"
+}
+
 variable "cpu_target" {
   description = "Target CPU utilization percentage"
   type        = number
@@ -158,25 +172,25 @@ variable "cpu_target" {
 
 variable "configmap_key" {
   type = string
-  default = null
+  default = "override.yaml"
   description = "The key of the configmap to be used as the configuration for the application"
 }
 
 variable "configmap_path" {
   type = string
-  default = null
+  default = "override.yaml"
   description = "The path where the configmap will be mounted"
 }
 
 variable "secret_key" {
   type = string
-  default = null
+  default = ".secrets.yaml"
   description = "The key of the secret to be used as the configuration for the application"
 }
 
 variable "secret_path" {
   type = string
-  default = null
+  default = ".secrets.yaml"
   description = "The path where the secret will be mounted"
 }
 
