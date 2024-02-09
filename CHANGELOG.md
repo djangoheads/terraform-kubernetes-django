@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.6.11](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.6.10...v1.6.11) (2024-02-09)
+
+
+### Bug Fixes
+
+* added default values ([fed2c97](https://github.com/djangoheads/terraform-kubernetes-django/commit/fed2c97b885aa7c40dc195c0adfbe6cbfed60b32))
+
 ### [1.6.10](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.6.9...v1.6.10) (2024-02-06)
 
 
