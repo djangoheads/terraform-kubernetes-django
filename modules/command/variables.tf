@@ -51,12 +51,13 @@ variable "secret_name" {
 }
 
 variable "settings_mount_path" {
-  type = string
-  default = "/var/etc/config"
+  type    = string
+  default = "/home/app/config/override.yaml"
 }
+
 variable "secrets_mount_path" {
-  type = string
-  default = "/var/etc/secrets"
+  type    = string
+  default = "/home/app/config/.secrets.yaml"
 }
 
 variable "image_pull_policy" {
@@ -67,25 +68,25 @@ variable "image_pull_policy" {
 
 variable "configmap_key" {
   type = string
-  default = null
+  default = "override.yaml"
   description = "The key of the configmap to be used as the configuration for the application"
 }
 
 variable "configmap_path" {
   type = string
-  default = null
+  default = "override.yaml"
   description = "The path where the configmap will be mounted"
 }
 
 variable "secret_key" {
   type = string
-  default = null
+  default = ".secrets.yaml"
   description = "The key of the secret to be used as the configuration for the application"
 }
 
 variable "secret_path" {
   type = string
-  default = null
+  default = ".secrets.yaml"
   description = "The path where the secret will be mounted"
 }
 
