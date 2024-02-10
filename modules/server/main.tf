@@ -173,6 +173,8 @@ resource "kubernetes_service" "server" {
   metadata {
     name      = var.name
     namespace = var.namespace
+    annotations = merge({
+    }, var.service_annotation)
   }
   spec {
     selector = {

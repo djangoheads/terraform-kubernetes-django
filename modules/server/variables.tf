@@ -205,3 +205,9 @@ variable "working_dir" {
   default = "/home/app/libs"
   description = "The working directory for the container"
 }
+
+variable "service_annotation" {
+  type = map(string)
+  default = {}
+  description = "Service annotations"
+}
