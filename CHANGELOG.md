@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.6.17](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.6.16...v1.6.17) (2024-02-14)
+
+
+### Bug Fixes
+
+* added command resources ([25d3089](https://github.com/djangoheads/terraform-kubernetes-django/commit/25d30890af8b5c7137002d6ad457e029190ac63a))
+
 ### [1.6.16](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.6.15...v1.6.16) (2024-02-14)
 
 
