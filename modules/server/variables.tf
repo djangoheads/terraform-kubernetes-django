@@ -211,3 +211,21 @@ variable "service_annotation" {
   default = {}
   description = "Service annotations"
 }
+
+variable "max_surge" {
+  type = number
+  default = 1
+  description = "The maximum number of pods that can be created above the desired number of pods"
+}
+
+variable "config_revision" {
+  type = string
+  default = ""
+  description = "The revision of the configmap to be used"
+}
+
+variable "secret_revision" {
+  type = string
+  default = ""
+  description = "The revision of the secret to be used"
+}

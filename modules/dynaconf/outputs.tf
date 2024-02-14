@@ -5,3 +5,11 @@ output "configmap_name" {
 output "secret_name" {
   value = kubernetes_secret.dynaconf.metadata[0].name
 }
+
+output "secret_revision" {
+  value = md5(jsonencode(kubernetes_secret.dynaconf.data))
+}
+
+output "config_revision" {
+  value = md5(jsonencode(kubernetes_config_map.dynaconf.data))
+}

@@ -7,7 +7,7 @@ resource "kubernetes_deployment" "server" {
     replicas = var.enable_autoscaler ? null : var.replica_count
     strategy {
       rolling_update {
-        max_surge = 1
+        max_surge = var.max_surge
       }
     }
     selector {
@@ -19,6 +19,8 @@ resource "kubernetes_deployment" "server" {
       metadata {
         labels = {
           service = var.name
+          config_revision = var.config_revision
+          secret_revision = var.secret_revision
         }
       }
       spec {
