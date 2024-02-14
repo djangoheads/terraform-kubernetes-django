@@ -229,3 +229,15 @@ variable "secret_revision" {
   default = ""
   description = "The revision of the secret to be used"
 }
+
+variable "limits" {
+  description = "Resource limits (CPU and memory)"
+  type        = map(string)
+  default     = {}
+}
+
+variable "requests" {
+  description = "Resource requests (CPU and memory)"
+  type        = map(string)
+  default     = {}
+}

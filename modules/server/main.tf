@@ -18,7 +18,7 @@ resource "kubernetes_deployment" "server" {
     template {
       metadata {
         labels = {
-          service = var.name
+          service         = var.name
           config_revision = var.config_revision
           secret_revision = var.secret_revision
         }
@@ -32,7 +32,7 @@ resource "kubernetes_deployment" "server" {
             command           = ["sh", "-c"]
             args              = var.init_command
             image_pull_policy = var.image_pull_policy
-            working_dir = var.init_working_dir
+            working_dir       = var.init_working_dir
             dynamic "env" {
               for_each = var.env_vars
               content {
@@ -60,7 +60,11 @@ resource "kubernetes_deployment" "server" {
           command           = var.command
           args              = var.args
           image_pull_policy = var.image_pull_policy
-          working_dir = var.working_dir
+          working_dir       = var.working_dir
+          resources {
+            limits   = length(var.limits) > 0 ? var.limits : null
+            requests = length(var.requests) > 0 ? var.requests : null
+          }
           port {
             container_port = var.container_port
           }
@@ -123,7 +127,7 @@ resource "kubernetes_deployment" "server" {
           projected {
             sources {
               config_map {
-                name = var.configmap_name
+                name     = var.configmap_name
                 optional = true
                 items {
                   key  = var.configmap_key
@@ -131,7 +135,7 @@ resource "kubernetes_deployment" "server" {
                 }
               }
               secret {
-                name = var.secret_name
+                name     = var.secret_name
                 optional = true
                 items {
                   key  = var.secret_key
@@ -173,8 +177,8 @@ resource "kubernetes_horizontal_pod_autoscaler" "autoscaler" {
 
 resource "kubernetes_service" "server" {
   metadata {
-    name      = var.name
-    namespace = var.namespace
+    name        = var.name
+    namespace   = var.namespace
     annotations = merge({
     }, var.service_annotation)
   }
