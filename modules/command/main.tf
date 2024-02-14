@@ -22,6 +22,10 @@ resource "kubernetes_job" "command" {
           args              = var.args
           image_pull_policy = var.image_pull_policy
           working_dir = var.working_dir
+          resources {
+            limits   = length(var.limits) > 0 ? var.limits : null
+            requests = length(var.requests) > 0 ? var.requests : null
+          }
           dynamic "env" {
             for_each = var.env_vars
             content {
