@@ -95,3 +95,15 @@ variable "working_dir" {
   default = "/home/app/libs"
   description = "The working directory for the container"
 }
+
+variable "config_revision" {
+  type = string
+  default = ""
+  description = "The revision of the configmap to be used"
+}
+
+variable "secret_revision" {
+  type = string
+  default = ""
+  description = "The revision of the secret to be used"
+}

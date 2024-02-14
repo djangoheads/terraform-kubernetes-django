@@ -10,6 +10,8 @@ resource "kubernetes_job" "command" {
       metadata {
         labels = {
           app = var.name
+          config_revision = var.config_revision
+          secret_revision = var.secret_revision
         }
       }
       spec {
