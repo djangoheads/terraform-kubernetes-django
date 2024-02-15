@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.6.18](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.6.17...v1.6.18) (2024-02-15)
+
+
+### Bug Fixes
+
+* pull policy of the images ([f2892ad](https://github.com/djangoheads/terraform-kubernetes-django/commit/f2892adfa0af8053233e3b5d2e19aa2bdd5471fa))
+
 ### [1.6.17](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.6.16...v1.6.17) (2024-02-14)
 
 
