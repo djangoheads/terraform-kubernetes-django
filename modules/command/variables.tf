@@ -62,7 +62,7 @@ variable "secrets_mount_path" {
 
 variable "image_pull_policy" {
   type        = string
-  default     = "IfNotPresent"
+  default     = "Always"
   description = "Image pull policy"
 }
 
