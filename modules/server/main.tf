@@ -1,4 +1,4 @@
-resource "kubernetes_deployment" "server" {
+resource "kubernetes_deployment" "default" {
   metadata {
     name      = var.name
     namespace = var.namespace
@@ -153,7 +153,7 @@ resource "kubernetes_deployment" "server" {
 
 }
 
-resource "kubernetes_horizontal_pod_autoscaler" "autoscaler" {
+resource "kubernetes_horizontal_pod_autoscaler" "default" {
   count = var.enable_autoscaler ? 1 : 0
   metadata {
     name      = var.name
@@ -175,7 +175,7 @@ resource "kubernetes_horizontal_pod_autoscaler" "autoscaler" {
 }
 
 
-resource "kubernetes_service" "server" {
+resource "kubernetes_service" "default" {
   metadata {
     name        = var.name
     namespace   = var.namespace

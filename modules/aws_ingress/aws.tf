@@ -1,4 +1,4 @@
-resource "kubernetes_ingress_v1" "main_ingress" {
+resource "kubernetes_ingress_v1" "default" {
   metadata {
     name      = var.name
     namespace = var.namespace

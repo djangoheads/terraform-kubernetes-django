@@ -1,4 +1,4 @@
-resource "kubernetes_job" "command" {
+resource "kubernetes_job" "default" {
   metadata {
     namespace = var.namespace
     name      = var.name
