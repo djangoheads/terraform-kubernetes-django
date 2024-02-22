@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.6.19](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.6.18...v1.6.19) (2024-02-22)
+
+
+### Bug Fixes
+
+* worker module, all root resources now default ([5069039](https://github.com/djangoheads/terraform-kubernetes-django/commit/5069039102cc189ab98fc3d0424d3a8e4413d6ad))
+
 ### [1.6.18](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.6.17...v1.6.18) (2024-02-15)
 
 
