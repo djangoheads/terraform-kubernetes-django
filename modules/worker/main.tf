@@ -141,7 +141,7 @@ resource "kubernetes_horizontal_pod_autoscaler" "default" {
   }
 }
 
-resource "kubernetes_pod_disruption_budget_v1" "pdb" {
+resource "kubernetes_pod_disruption_budget_v1" "default" {
   metadata {
     name      = "${var.name}-pdb"
     namespace = var.namespace

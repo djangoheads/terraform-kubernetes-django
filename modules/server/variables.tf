@@ -245,5 +245,5 @@ variable "requests" {
 variable "pdb_min_available" {
   description = "Minimum number of pods that must still be available after the eviction"
   type        = number
-  default     = 2
+  default     = 1
 }
