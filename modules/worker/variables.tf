@@ -227,11 +227,13 @@ variable "requests" {
   type        = map(string)
   default     = {}
 }
+
 variable "labels" {
   description = "Labels to be added to the deployment"
   type        = map(string)
   default     = {}
 }
+
 variable "pdb_min_available" {
   description = "Minimum number of pods that must still be available after the eviction"
   type        = number
