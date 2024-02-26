@@ -2,17 +2,18 @@ resource "kubernetes_job" "default" {
   metadata {
     namespace = var.namespace
     name      = var.name
+    labels = var.labels
   }
   spec {
     ttl_seconds_after_finished = 100
     backoff_limit              = 5
     template {
       metadata {
-        labels = {
-          app = var.name
+        labels = merge({
+          service         = var.name
           config_revision = var.config_revision
           secret_revision = var.secret_revision
-        }
+        }, var.labels)
       }
       spec {
         container {

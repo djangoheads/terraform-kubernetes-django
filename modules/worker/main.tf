@@ -2,6 +2,7 @@ resource "kubernetes_deployment" "default" {
   metadata {
     name      = var.name
     namespace = var.namespace
+    labels = var.labels
   }
   spec {
     replicas = var.enable_autoscaler ? null : var.replica_count
@@ -17,11 +18,11 @@ resource "kubernetes_deployment" "default" {
     }
     template {
       metadata {
-        labels = {
+        labels = merge({
           service         = var.name
           config_revision = var.config_revision
           secret_revision = var.secret_revision
-        }
+        }, var.labels)
       }
       spec {
         container {
