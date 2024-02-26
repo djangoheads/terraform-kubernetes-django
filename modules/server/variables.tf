@@ -244,6 +244,6 @@ variable "requests" {
 
 variable "labels" {
   description = "Labels to be added to the deployment"
-  type        = map(any)
+  type        = map(string)
   default     = {}
 }
