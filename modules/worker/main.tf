@@ -141,3 +141,18 @@ resource "kubernetes_horizontal_pod_autoscaler" "default" {
     }
   }
 }
+
+resource "kubernetes_pod_disruption_budget_v1" "default" {
+  metadata {
+    name      = "${var.name}-pdb"
+    namespace = var.namespace
+  }
+  spec {
+    min_available = var.pdb_min_available
+    selector {
+      match_labels = {
+        service = var.name
+      }
+    }
+  }
+}
