@@ -196,7 +196,7 @@ resource "kubernetes_service" "default" {
   }
 }
 
-resource "kubernetes_pod_disruption_budget" "pdb" {
+resource "kubernetes_pod_disruption_budget_v1" "pdb" {
   metadata {
     name      = "${var.name}-pdb"
     namespace = var.namespace
