@@ -195,3 +195,18 @@ resource "kubernetes_service" "default" {
     type = "NodePort"
   }
 }
+
+resource "kubernetes_pod_disruption_budget" "pdb" {
+  metadata {
+    name      = "${var.name}-pdb"
+    namespace = var.namespace
+  }
+  spec {
+    min_available = var.pdb_min_available
+    selector {
+      match_labels = {
+        service = var.name
+      }
+    }
+  }
+}
