@@ -25,6 +25,9 @@ resource "kubernetes_deployment" "default" {
         }, var.labels)
       }
       spec {
+        security_context {
+          fs_group = var.fs_group
+        }
         dynamic "init_container" {
           for_each = var.init_command
           content {
@@ -88,6 +91,13 @@ resource "kubernetes_deployment" "default" {
             sub_path   = var.secret_path
             read_only  = true
           }
+          dynamic "volume_mount" {
+            for_each = var.persistence_enabled ? [1] : []
+            content {
+              name       = "${var.name}-pvc"
+              mount_path = var.pvc_mount_path
+            }
+          }
           dynamic "readiness_probe" {
             for_each = var.readiness
             content {
@@ -143,6 +153,16 @@ resource "kubernetes_deployment" "default" {
                   path = var.secret_path
                 }
               }
+            }
+          }
+        }
+        dynamic "volume" {
+          for_each = var.persistence_enabled ? [1] : []
+          content {
+            name = "${var.name}-pvc"
+
+            persistent_volume_claim {
+              claim_name = var.name
             }
           }
         }

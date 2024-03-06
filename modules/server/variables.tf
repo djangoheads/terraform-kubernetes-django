@@ -251,3 +251,21 @@ variable "pdb_min_available" {
   type        = number
   default     = 1
 }
+
+variable "persistence_enabled" {
+  description = "Enable persistence using a PVC"
+  type        = bool
+  default     = false
+}
+
+variable "pvc_mount_path" {
+  description = "The path where the volume will be mounted"
+  type        = string
+  default     = "/home/app"
+}
+
+variable "fs_group" {
+  description = "The group ID of the volume"
+  type        = number
+  default     = null
+}
