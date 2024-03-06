@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.8.0](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.7.0...v1.8.0) (2024-03-06)
+
+
+### Features
+
+* added optional pvc resource ([7342e35](https://github.com/djangoheads/terraform-kubernetes-django/commit/7342e35468e82805a816d091315367bf217e6445))
+
 ## [1.7.0](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.6.19...v1.7.0) (2024-02-26)
 
 
