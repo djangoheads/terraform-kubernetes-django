@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.9.1](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.9.0...v1.9.1) (2024-03-15)
+
+
+### Bug Fixes
+
+* added pdb_max_unavailable option ([6611df1](https://github.com/djangoheads/terraform-kubernetes-django/commit/6611df1c0545e3f13a5a22bd8d502a88173bc850))
+
 ## [1.9.0](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.8.0...v1.9.0) (2024-03-15)
 
 
