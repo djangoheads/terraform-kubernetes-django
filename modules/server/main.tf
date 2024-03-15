@@ -9,6 +9,7 @@ resource "kubernetes_deployment" "default" {
     strategy {
       rolling_update {
         max_surge = var.max_surge
+        max_unavailable = var.max_unavailable
       }
     }
     selector {

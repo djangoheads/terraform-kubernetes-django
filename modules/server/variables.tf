@@ -269,3 +269,9 @@ variable "fs_group" {
   type        = number
   default     = null
 }
+
+variable "max_unavailable" {
+  description = "The maximum number of pods that can be unavailable during the update"
+  type        = string
+  default     = "25%"
+}
