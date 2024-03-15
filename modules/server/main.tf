@@ -2,13 +2,13 @@ resource "kubernetes_deployment" "default" {
   metadata {
     name      = var.name
     namespace = var.namespace
-    labels = var.labels
+    labels    = var.labels
   }
   spec {
     replicas = var.enable_autoscaler ? null : var.replica_count
     strategy {
       rolling_update {
-        max_surge = var.max_surge
+        max_surge       = var.max_surge
         max_unavailable = var.max_unavailable
       }
     }
@@ -224,7 +224,8 @@ resource "kubernetes_pod_disruption_budget_v1" "default" {
     namespace = var.namespace
   }
   spec {
-    min_available = var.pdb_min_available
+    min_available   = var.pdb_min_available
+    max_unavailable = var.pdb_max_unavailable
     selector {
       match_labels = {
         service = var.name

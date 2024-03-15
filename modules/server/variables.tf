@@ -252,6 +252,12 @@ variable "pdb_min_available" {
   default     = 1
 }
 
+variable "pdb_max_unavailable" {
+  description = "Maximum number of pods that can be unavailable during the eviction"
+  type        = number
+  default     = null
+}
+
 variable "persistence_enabled" {
   description = "Enable persistence using a PVC"
   type        = bool
