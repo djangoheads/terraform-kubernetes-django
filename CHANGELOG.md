@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.9.0](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.8.0...v1.9.0) (2024-03-15)
+
+
+### Features
+
+* added max_unavailable option ([8e6773a](https://github.com/djangoheads/terraform-kubernetes-django/commit/8e6773a20b05c6063cf02cd8a2eb3c471612bae2))
+
 ## [1.8.0](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.7.0...v1.8.0) (2024-03-06)
 
 
