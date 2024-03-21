@@ -124,7 +124,7 @@ variable "readiness" {
     {
       http_get = [
         {
-          path = "/healthcheck"
+          path = "/healthcheck/"
           port = 8000
         }
       ]
