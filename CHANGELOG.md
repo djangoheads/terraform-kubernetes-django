@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.9.2](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.9.1...v1.9.2) (2024-03-21)
+
+
+### Bug Fixes
+
+* added ingress timeout, fixed healthcheck ([a8bdd21](https://github.com/djangoheads/terraform-kubernetes-django/commit/a8bdd2100ca4fc51c8f5927271d394541dabd39c))
+
 ### [1.9.1](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.9.0...v1.9.1) (2024-03-15)
 
 
