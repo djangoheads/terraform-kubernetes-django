@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.9.3](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.9.2...v1.9.3) (2024-03-28)
+
+
+### Bug Fixes
+
+* added exec healthcheck ([6d3af1a](https://github.com/djangoheads/terraform-kubernetes-django/commit/6d3af1a70ad6b9d1fddf699f14a9bc516385db78))
+
 ### [1.9.2](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.9.1...v1.9.2) (2024-03-21)
 
 
