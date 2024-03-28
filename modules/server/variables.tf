@@ -41,8 +41,8 @@ variable "wait" {
 
 variable "replicas" {
   type = object({
-    min = number
-    max = number
+    min = optional(number)
+    max = optional(number)
   })
   default = {
     min = 1
@@ -76,7 +76,9 @@ variable "env_vars" {
 }
 variable "init_command" {
   type        = list(string)
-  default     = ["for i in {1..100}; do sleep 1; if django-admin migrate --check; then exit 0; fi; done; exit 1"]
+  default     = [
+    "for i in {1..100}; do sleep 1; if django-admin migrate --check; then exit 0; fi; done; exit 1"
+  ]
   description = "Override command"
 }
 
@@ -119,6 +121,9 @@ variable "readiness" {
       path = optional(string)
       port = optional(number)
     })))
+    exec = optional(list(object({
+      command = optional(list(string))
+    })))
   }))
   default = [
     {
@@ -128,6 +133,7 @@ variable "readiness" {
           port = 8000
         }
       ]
+      exec = []
       initial_delay_seconds = 30
       period_seconds        = 10
       timeout_seconds       = 5
@@ -171,62 +177,62 @@ variable "cpu_target" {
 }
 
 variable "configmap_key" {
-  type = string
-  default = "override.yaml"
+  type        = string
+  default     = "override.yaml"
   description = "The key of the configmap to be used as the configuration for the application"
 }
 
 variable "configmap_path" {
-  type = string
-  default = "override.yaml"
+  type        = string
+  default     = "override.yaml"
   description = "The path where the configmap will be mounted"
 }
 
 variable "secret_key" {
-  type = string
-  default = ".secrets.yaml"
+  type        = string
+  default     = ".secrets.yaml"
   description = "The key of the secret to be used as the configuration for the application"
 }
 
 variable "secret_path" {
-  type = string
-  default = ".secrets.yaml"
+  type        = string
+  default     = ".secrets.yaml"
   description = "The path where the secret will be mounted"
 }
 
 variable "init_working_dir" {
-  type = string
-  default = "/home/app/libs"
+  type        = string
+  default     = "/home/app/libs"
   description = "The working directory for the init container"
 }
 
 variable "working_dir" {
-  type = string
-  default = "/home/app/libs"
+  type        = string
+  default     = "/home/app/libs"
   description = "The working directory for the container"
 }
 
 variable "service_annotation" {
-  type = map(string)
-  default = {}
+  type        = map(string)
+  default     = {}
   description = "Service annotations"
 }
 
 variable "max_surge" {
-  type = number
-  default = 1
+  type        = number
+  default     = 1
   description = "The maximum number of pods that can be created above the desired number of pods"
 }
 
 variable "config_revision" {
-  type = string
-  default = ""
+  type        = string
+  default     = ""
   description = "The revision of the configmap to be used"
 }
 
 variable "secret_revision" {
-  type = string
-  default = ""
+  type        = string
+  default     = ""
   description = "The revision of the secret to be used"
 }
 

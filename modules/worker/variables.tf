@@ -41,8 +41,8 @@ variable "wait" {
 
 variable "replicas" {
   type = object({
-    min = number
-    max = number
+    min = optional(number)
+    max = optional(number)
   })
   default = {
     min = 1
@@ -107,7 +107,6 @@ variable "image_pull_policy" {
   default     = "Always"
   description = "Image pull policy"
 }
-
 variable "readiness" {
   type = list(object({
     initial_delay_seconds = optional(number)
@@ -118,6 +117,9 @@ variable "readiness" {
     http_get              = optional(list(object({
       path = optional(string)
       port = optional(number)
+    })))
+    exec = optional(list(object({
+      command = optional(list(string))
     })))
   }))
   default = []

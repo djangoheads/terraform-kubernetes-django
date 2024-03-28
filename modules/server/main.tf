@@ -103,10 +103,16 @@ resource "kubernetes_deployment" "default" {
             for_each = var.readiness
             content {
               dynamic "http_get" {
-                for_each = readiness_probe.value["http_get"]
+                for_each = readiness_probe.value.http_get != null ? readiness_probe.value.http_get : []
                 content {
                   path = http_get.value["path"]
                   port = http_get.value["port"]
+                }
+              }
+              dynamic "exec" {
+                for_each = readiness_probe.value.exec != null ? readiness_probe.value.exec : []
+                content {
+                  command = exec.value.command
                 }
               }
               initial_delay_seconds = readiness_probe.value["initial_delay_seconds"]
