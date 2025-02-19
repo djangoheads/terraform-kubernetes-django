@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.9.4](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.9.3...v1.9.4) (2025-02-19)
+
+
+### Bug Fixes
+
+* added default config ([c8ed9ba](https://github.com/djangoheads/terraform-kubernetes-django/commit/c8ed9bae8e7f7bf33651cde966d5211047a57d27))
+
 ### [1.9.3](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.9.2...v1.9.3) (2024-03-28)
 
 
