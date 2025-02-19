@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.9.5](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.9.4...v1.9.5) (2025-02-19)
+
+
+### Bug Fixes
+
+* added phoenix_command ([0ad5677](https://github.com/djangoheads/terraform-kubernetes-django/commit/0ad56772f817cc7f1d6bfba1ce2fec0e50a957a3))
+
 ### [1.9.4](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.9.3...v1.9.4) (2025-02-19)
 
 
