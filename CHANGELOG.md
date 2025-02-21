@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.9.6](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.9.5...v1.9.6) (2025-02-21)
+
+
+### Bug Fixes
+
+* adjusted phx modules ([130b3d9](https://github.com/djangoheads/terraform-kubernetes-django/commit/130b3d922fb7713ad1b7d7db8f3eff0d49e2248b))
+
 ### [1.9.5](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.9.4...v1.9.5) (2025-02-19)
 
 
