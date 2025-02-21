@@ -47,10 +47,12 @@ resource "kubernetes_deployment" "default" {
             }
             env_from {
               config_map_ref {
-                name = "${var.name}-settings"
+                name = var.configmap_name
               }
+            }
+            env_from {
               secret_ref {
-                name = "${var.name}-settings"
+                  name = var.secret_name
               }
             }
           }
@@ -78,12 +80,14 @@ resource "kubernetes_deployment" "default" {
           }
           env_from {
               config_map_ref {
-                name = "${var.name}-settings"
-              }
-              secret_ref {
-                name = "${var.name}-settings"
+                name = var.configmap_name
               }
             }
+          env_from {
+            secret_ref {
+                name = var.secret_name
+            }
+          }
           dynamic "volume_mount" {
             for_each = var.persistence_enabled ? [1] : []
             content {

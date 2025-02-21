@@ -6,9 +6,7 @@ resource "kubernetes_config_map" "default" {
     name      = "${var.name}-settings"
   }
 
-  data = {
-    ".env" = var.defaultconf.settings
-  }
+   data = var.defaultconf.settings
 }
 
 
@@ -18,7 +16,5 @@ resource "kubernetes_secret" "default" {
     name      = "${var.name}-settings"
   }
 
-  data = {
-    ".secrets" = var.defaultconf.secrets
-  }
+  data =  var.defaultconf.secrets
 }

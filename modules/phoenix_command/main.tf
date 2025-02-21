@@ -38,12 +38,14 @@ resource "kubernetes_job" "default" {
           # Mounts
           env_from {
               config_map_ref {
-                name = "${var.name}-settings"
-              }
-              secret_ref {
-                name = "${var.name}-settings"
+                name = var.configmap_name
               }
             }
+          env_from {
+            secret_ref {
+                name = var.secret_name
+            }
+          }
         }
         restart_policy = "Never"
       }

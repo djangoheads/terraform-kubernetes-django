@@ -92,7 +92,7 @@ variable "secret_path" {
 
 variable "working_dir" {
   type = string
-  default = "/home/app/libs"
+  default = "/app"
   description = "The working directory for the container"
 }
 

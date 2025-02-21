@@ -10,7 +10,7 @@ variable "name" {
 
 variable "defaultconf" {
   type = object({
-    settings = string
-    secrets = string
+    settings = map(string)
+    secrets = map(string)
   })
 }

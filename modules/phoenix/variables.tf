@@ -77,7 +77,7 @@ variable "env_vars" {
 variable "init_command" {
   type        = list(string)
   default     = [
-    "for i in {1..100}; do sleep 1; if django-admin migrate --check; then exit 0; fi; done; exit 1"
+    "for i in {1..100}; do sleep 1; if /app/bin/migrate; then exit 0; fi; done; exit 1"
   ]
   description = "Override command"
 }
@@ -129,7 +129,7 @@ variable "readiness" {
     {
       http_get = [
         {
-          path = "/healthcheck/"
+          path = "/healthz"
           port = 8000
         }
       ]
@@ -202,13 +202,13 @@ variable "secret_path" {
 
 variable "init_working_dir" {
   type        = string
-  default     = "/home/app/libs"
+  default     = "/app"
   description = "The working directory for the init container"
 }
 
 variable "working_dir" {
   type        = string
-  default     = "/home/app/libs"
+  default     = "/app"
   description = "The working directory for the container"
 }
 
