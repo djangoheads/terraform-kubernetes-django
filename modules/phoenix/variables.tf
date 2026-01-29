@@ -76,10 +76,8 @@ variable "env_vars" {
 }
 variable "init_command" {
   type        = list(string)
-  default     = [
-    "for i in {1..100}; do sleep 1; if /app/bin/migrate; then exit 0; fi; done; exit 1"
-  ]
-  description = "Override command"
+  default     = []
+  description = "Init container command. Empty by default - rely on separate migration Job with wait=true instead of init container."
 }
 
 variable "configmap_name" {
@@ -157,6 +155,26 @@ variable "liveness" {
   }))
   default = []
 }
+
+variable "startup" {
+  type = list(object({
+    initial_delay_seconds = optional(number)
+    period_seconds        = optional(number)
+    timeout_seconds       = optional(number)
+    failure_threshold     = optional(number)
+    success_threshold     = optional(number)
+    http_get = optional(list(object({
+      path = optional(string)
+      port = optional(number)
+    })))
+    exec = optional(list(object({
+      command = optional(list(string))
+    })))
+  }))
+  default     = []
+  description = "Startup probe configuration. Use exec with migration check command to verify migrations before app becomes ready."
+}
+
 
 variable "enable_autoscaler" {
   description = "Boolean flag to enable/disable kubernetes horizontal pod autoscaler"

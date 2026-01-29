@@ -124,3 +124,21 @@ variable "labels" {
   type        = map(string)
   default     = {}
 }
+
+variable "timeout" {
+  type        = string
+  default     = "6m"
+  description = "Terraform timeout for job create/update operations"
+}
+
+variable "active_deadline_seconds" {
+  type        = number
+  default     = 300
+  description = "Kubernetes-level deadline in seconds after which the job will be terminated"
+}
+
+variable "backoff_limit" {
+  type        = number
+  default     = 3
+  description = "Number of retries before marking the job as failed"
+}

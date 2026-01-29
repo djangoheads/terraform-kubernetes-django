@@ -135,6 +135,29 @@ resource "kubernetes_deployment" "default" {
               success_threshold     = liveness_probe.value["success_threshold"]
             }
           }
+          dynamic "startup_probe" {
+            for_each = var.startup
+            content {
+              dynamic "http_get" {
+                for_each = startup_probe.value.http_get != null ? startup_probe.value.http_get : []
+                content {
+                  path = http_get.value["path"]
+                  port = http_get.value["port"]
+                }
+              }
+              dynamic "exec" {
+                for_each = startup_probe.value.exec != null ? startup_probe.value.exec : []
+                content {
+                  command = exec.value.command
+                }
+              }
+              initial_delay_seconds = startup_probe.value["initial_delay_seconds"]
+              period_seconds        = startup_probe.value["period_seconds"]
+              timeout_seconds       = startup_probe.value["timeout_seconds"]
+              failure_threshold     = startup_probe.value["failure_threshold"]
+              success_threshold     = startup_probe.value["success_threshold"]
+            }
+          }
         }
         dynamic "volume" {
           for_each = var.persistence_enabled ? [1] : []

@@ -6,7 +6,8 @@ resource "kubernetes_job" "default" {
   }
   spec {
     ttl_seconds_after_finished = 100
-    backoff_limit              = 5
+    backoff_limit              = var.backoff_limit
+    active_deadline_seconds    = var.active_deadline_seconds
     template {
       metadata {
         labels = merge({
@@ -52,4 +53,9 @@ resource "kubernetes_job" "default" {
     }
   }
   wait_for_completion = var.wait
+
+  timeouts {
+    create = var.timeout
+    update = var.timeout
+  }
 }
