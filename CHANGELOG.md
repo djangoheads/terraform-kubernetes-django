@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.10.0](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.9.7...v1.10.0) (2026-08-01)
+
+
+### Features
+
+* add gcp gateway support ([d3e13cb](https://github.com/djangoheads/terraform-kubernetes-django/commit/d3e13cb5df32c4d90ced680aa50291cbb798e492))
+
 ### [1.9.6](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.9.5...v1.9.6) (2025-02-21)
 
 
