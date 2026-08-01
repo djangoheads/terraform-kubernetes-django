@@ -205,8 +205,8 @@ resource "kubernetes_horizontal_pod_autoscaler" "default" {
 
 resource "kubernetes_service" "default" {
   metadata {
-    name        = var.name
-    namespace   = var.namespace
+    name      = var.name
+    namespace = var.namespace
     annotations = merge({
     }, var.service_annotation)
   }
@@ -220,7 +220,7 @@ resource "kubernetes_service" "default" {
       port        = var.service_port
       target_port = var.service_target_port
     }
-    type = "NodePort"
+    type = var.service_type
   }
 }
 

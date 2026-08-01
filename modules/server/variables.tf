@@ -75,8 +75,8 @@ variable "env_vars" {
   default     = {}
 }
 variable "init_command" {
-  type        = list(string)
-  default     = [
+  type = list(string)
+  default = [
     "for i in {1..100}; do sleep 1; if django-admin migrate --check; then exit 0; fi; done; exit 1"
   ]
   description = "Override command"
@@ -117,7 +117,7 @@ variable "readiness" {
     timeout_seconds       = optional(number)
     failure_threshold     = optional(number)
     success_threshold     = optional(number)
-    http_get              = optional(list(object({
+    http_get = optional(list(object({
       path = optional(string)
       port = optional(number)
     })))
@@ -133,7 +133,7 @@ variable "readiness" {
           port = 8000
         }
       ]
-      exec = []
+      exec                  = []
       initial_delay_seconds = 30
       period_seconds        = 10
       timeout_seconds       = 5
@@ -150,7 +150,7 @@ variable "liveness" {
     timeout_seconds       = optional(number)
     failure_threshold     = optional(number)
     success_threshold     = optional(number)
-    http_get              = optional(list(object({
+    http_get = optional(list(object({
       path = optional(string)
       port = optional(number)
     })))
@@ -270,6 +270,12 @@ variable "persistence_enabled" {
   default     = false
 }
 
+variable "pvc_storage_class_name" {
+  description = "StorageClass used by the optional PVC. Defaults to gp2 for AWS compatibility; set to standard-rwo or another GKE class when deploying on GKE."
+  type        = string
+  default     = "gp2"
+}
+
 variable "pvc_mount_path" {
   description = "The path where the volume will be mounted"
   type        = string
@@ -280,6 +286,12 @@ variable "fs_group" {
   description = "The group ID of the volume"
   type        = number
   default     = null
+}
+
+variable "service_type" {
+  description = "Kubernetes Service type. Defaults to NodePort for AWS ALB compatibility; GKE deployments can override to ClusterIP when using container-native load balancing."
+  type        = string
+  default     = "NodePort"
 }
 
 variable "max_unavailable" {

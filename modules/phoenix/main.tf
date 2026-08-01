@@ -52,7 +52,7 @@ resource "kubernetes_deployment" "default" {
             }
             env_from {
               secret_ref {
-                  name = var.secret_name
+                name = var.secret_name
               }
             }
           }
@@ -79,13 +79,13 @@ resource "kubernetes_deployment" "default" {
             }
           }
           env_from {
-              config_map_ref {
-                name = var.configmap_name
-              }
+            config_map_ref {
+              name = var.configmap_name
             }
+          }
           env_from {
             secret_ref {
-                name = var.secret_name
+              name = var.secret_name
             }
           }
           dynamic "volume_mount" {
@@ -201,8 +201,8 @@ resource "kubernetes_horizontal_pod_autoscaler" "default" {
 
 resource "kubernetes_service" "default" {
   metadata {
-    name        = var.name
-    namespace   = var.namespace
+    name      = var.name
+    namespace = var.namespace
     annotations = merge({
     }, var.service_annotation)
   }
@@ -216,7 +216,7 @@ resource "kubernetes_service" "default" {
       port        = var.service_port
       target_port = var.service_target_port
     }
-    type = "NodePort"
+    type = var.service_type
   }
 }
 
