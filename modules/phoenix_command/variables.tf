@@ -1,11 +1,11 @@
 # Common variables
 
 variable "namespace" {
-    type = string
+  type = string
 }
 
 variable "name" {
-    type = string
+  type = string
 }
 
 # Server specific variables
@@ -66,45 +66,51 @@ variable "image_pull_policy" {
   description = "Image pull policy"
 }
 
+variable "service_account_name" {
+  type        = string
+  default     = null
+  description = "Kubernetes ServiceAccount name to run Pods as. Null keeps Kubernetes using the namespace default."
+}
+
 variable "configmap_key" {
-  type = string
-  default = "override.yaml"
+  type        = string
+  default     = "override.yaml"
   description = "The key of the configmap to be used as the configuration for the application"
 }
 
 variable "configmap_path" {
-  type = string
-  default = "override.yaml"
+  type        = string
+  default     = "override.yaml"
   description = "The path where the configmap will be mounted"
 }
 
 variable "secret_key" {
-  type = string
-  default = ".secrets.yaml"
+  type        = string
+  default     = ".secrets.yaml"
   description = "The key of the secret to be used as the configuration for the application"
 }
 
 variable "secret_path" {
-  type = string
-  default = ".secrets.yaml"
+  type        = string
+  default     = ".secrets.yaml"
   description = "The path where the secret will be mounted"
 }
 
 variable "working_dir" {
-  type = string
-  default = "/app"
+  type        = string
+  default     = "/app"
   description = "The working directory for the container"
 }
 
 variable "config_revision" {
-  type = string
-  default = ""
+  type        = string
+  default     = ""
   description = "The revision of the configmap to be used"
 }
 
 variable "secret_revision" {
-  type = string
-  default = ""
+  type        = string
+  default     = ""
   description = "The revision of the secret to be used"
 }
 

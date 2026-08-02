@@ -108,6 +108,12 @@ variable "image_pull_policy" {
   description = "Image pull policy"
 }
 
+variable "service_account_name" {
+  type        = string
+  default     = null
+  description = "Kubernetes ServiceAccount name to run Pods as. Null keeps Kubernetes using the namespace default."
+}
+
 variable "readiness" {
   type = list(object({
     initial_delay_seconds = optional(number)

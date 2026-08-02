@@ -2,7 +2,7 @@ resource "kubernetes_job" "default" {
   metadata {
     namespace = var.namespace
     name      = var.name
-    labels = var.labels
+    labels    = var.labels
   }
   spec {
     ttl_seconds_after_finished = 100
@@ -17,13 +17,15 @@ resource "kubernetes_job" "default" {
         }, var.labels)
       }
       spec {
+        service_account_name = var.service_account_name
+
         container {
           name              = "main"
           image             = var.image
           command           = var.command
           args              = var.args
           image_pull_policy = var.image_pull_policy
-          working_dir = var.working_dir
+          working_dir       = var.working_dir
           resources {
             limits   = length(var.limits) > 0 ? var.limits : null
             requests = length(var.requests) > 0 ? var.requests : null
@@ -38,13 +40,13 @@ resource "kubernetes_job" "default" {
 
           # Mounts
           env_from {
-              config_map_ref {
-                name = var.configmap_name
-              }
+            config_map_ref {
+              name = var.configmap_name
             }
+          }
           env_from {
             secret_ref {
-                name = var.secret_name
+              name = var.secret_name
             }
           }
         }

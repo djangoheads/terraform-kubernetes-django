@@ -26,6 +26,8 @@ resource "kubernetes_deployment" "default" {
         }, var.labels)
       }
       spec {
+        service_account_name = var.service_account_name
+
         security_context {
           fs_group = var.fs_group
         }
