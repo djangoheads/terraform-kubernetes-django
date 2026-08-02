@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.11.0](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.10.0...v1.11.0) (2026-08-02)
+
+
+### Features
+
+* add service account support to phoenix modules ([ed79f44](https://github.com/djangoheads/terraform-kubernetes-django/commit/ed79f44a6cdf32ea35d4066fa4f4b8a435082334))
+
 ## [1.10.0](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.9.7...v1.10.0) (2026-08-01)
 
 
