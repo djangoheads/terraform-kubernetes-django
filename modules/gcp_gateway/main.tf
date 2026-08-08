@@ -41,9 +41,6 @@ resource "kubernetes_manifest" "gateway" {
           name     = "https"
           protocol = "HTTPS"
           port     = 443
-          tls = {
-            mode = "Terminate"
-          }
           allowedRoutes = {
             namespaces = {
               from = "Same"
