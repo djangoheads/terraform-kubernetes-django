@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.11.1](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.11.0...v1.11.1) (2026-08-08)
+
+
+### Bug Fixes
+
+* support certmap GKE gateway listeners ([201c804](https://github.com/djangoheads/terraform-kubernetes-django/commit/201c80454c2b5cb690d54e3036bac262062ada5e))
+
 ## [1.11.0](https://github.com/djangoheads/terraform-kubernetes-django/compare/v1.10.0...v1.11.0) (2026-08-02)
 
 
